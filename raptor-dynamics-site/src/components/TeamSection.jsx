@@ -99,6 +99,8 @@ function PersonCard({ person, accent = false }) {
               src={photoSrc}
               alt={person.name}
               className="w-full h-full object-cover object-top"
+              loading="lazy"
+              decoding="async"
             />
           ) : (
             <span

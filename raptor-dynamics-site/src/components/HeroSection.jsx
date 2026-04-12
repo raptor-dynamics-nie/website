@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 /**
- * HUD Canvas — animated drone grid background
+ * HeroCanvas — subtle, refined animated background
  */
 function HeroCanvas() {
   const canvasRef = useRef(null)
@@ -11,11 +11,10 @@ function HeroCanvas() {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
-    let animId
-    let time = 0
+    let animId, t = 0
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth * window.devicePixelRatio
+      canvas.width  = canvas.offsetWidth  * window.devicePixelRatio
       canvas.height = canvas.offsetHeight * window.devicePixelRatio
       ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
     }
@@ -27,57 +26,64 @@ function HeroCanvas() {
       const H = canvas.offsetHeight
       ctx.clearRect(0, 0, W, H)
 
-      // Grid
-      const gridSize = 60
-      ctx.strokeStyle = 'rgba(232,255,0,0.04)'
+      // ── Subtle grid ──────────────────────────────────
+      const gs = 72
+      ctx.strokeStyle = 'rgba(232,255,0,0.028)'
       ctx.lineWidth = 0.5
-      for (let x = 0; x < W; x += gridSize) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke()
-      }
-      for (let y = 0; y < H; y += gridSize) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke()
+      for (let x = 0; x < W; x += gs) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke() }
+      for (let y = 0; y < H; y += gs) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke() }
+
+      // ── Very slow diagonal light sweep ───────────────
+      ctx.strokeStyle = 'rgba(232,255,0,0.022)'
+      ctx.lineWidth = 0.6
+      for (let i = -4; i < 10; i++) {
+        const off = ((t * 0.15 + i * 240) % (W + H))
+        ctx.beginPath(); ctx.moveTo(off, 0); ctx.lineTo(off - H * 0.55, H); ctx.stroke()
       }
 
-      // Diagonal accent lines
-      ctx.strokeStyle = 'rgba(232,255,0,0.05)'
-      ctx.lineWidth = 0.8
-      for (let i = -10; i < 20; i++) {
-        const offset = (time * 0.25 + i * 120) % (W + H)
+      // ── Soft scanline ────────────────────────────────
+      const scanY = (t * 0.5) % H
+      const sg = ctx.createLinearGradient(0, scanY - 130, 0, scanY + 130)
+      sg.addColorStop(0, 'transparent')
+      sg.addColorStop(0.5, 'rgba(232,255,0,0.014)')
+      sg.addColorStop(1, 'transparent')
+      ctx.fillStyle = sg
+      ctx.fillRect(0, scanY - 130, W, 260)
+
+      // ── Slow expanding rings ──────────────────────────
+      const rcx = W * 0.76, rcy = H * 0.44
+      for (let ri = 0; ri < 4; ri++) {
+        const phase  = ((t * 0.003) + ri * 0.25) % 1
+        const radius = phase * Math.min(W, H) * 0.3
+        const alpha  = (1 - phase) * 0.065
         ctx.beginPath()
-        ctx.moveTo(offset, 0)
-        ctx.lineTo(offset - H * 0.8, H)
+        ctx.arc(rcx, rcy, radius, 0, Math.PI * 2)
+        ctx.strokeStyle = `rgba(232,255,0,${alpha})`
+        ctx.lineWidth = 0.8
         ctx.stroke()
       }
+      // Center dot
+      const dotPulse = Math.sin(t * 0.045) * 0.3 + 0.7
+      ctx.beginPath()
+      ctx.arc(rcx, rcy, 2, 0, Math.PI * 2)
+      ctx.fillStyle = `rgba(232,255,0,${dotPulse * 0.45})`
+      ctx.fill()
 
-      // Moving scanline
-      const scanY = (time * 1.2) % H
-      const grad = ctx.createLinearGradient(0, scanY - 80, 0, scanY + 80)
-      grad.addColorStop(0, 'transparent')
-      grad.addColorStop(0.5, 'rgba(232,255,0,0.03)')
-      grad.addColorStop(1, 'transparent')
-      ctx.fillStyle = grad
-      ctx.fillRect(0, scanY - 80, W, 160)
+      // ── Corner HUD brackets ───────────────────────────
+      const bS = 22, bG = 32
+      ctx.strokeStyle = 'rgba(232,255,0,0.2)'
+      ctx.lineWidth = 1.2
+      ;[[bG, bG], [W - bG, bG], [bG, H - bG], [W - bG, H - bG]].forEach(([bx, by], idx) => {
+        const sx = idx % 2 === 0 ? 1 : -1
+        const sy = idx < 2 ? 1 : -1
+        ctx.beginPath()
+        ctx.moveTo(bx, by + sy * bS)
+        ctx.lineTo(bx, by)
+        ctx.lineTo(bx + sx * bS, by)
+        ctx.stroke()
+      })
 
-      // Corner brackets
-      const bSize = 24, bGap = 40
-      ctx.strokeStyle = 'rgba(232,255,0,0.28)'
-      ctx.lineWidth = 1.5
-      ctx.beginPath(); ctx.moveTo(bGap, bGap + bSize); ctx.lineTo(bGap, bGap); ctx.lineTo(bGap + bSize, bGap); ctx.stroke()
-      ctx.beginPath(); ctx.moveTo(W - bGap - bSize, bGap); ctx.lineTo(W - bGap, bGap); ctx.lineTo(W - bGap, bGap + bSize); ctx.stroke()
-      ctx.beginPath(); ctx.moveTo(bGap, H - bGap - bSize); ctx.lineTo(bGap, H - bGap); ctx.lineTo(bGap + bSize, H - bGap); ctx.stroke()
-      ctx.beginPath(); ctx.moveTo(W - bGap - bSize, H - bGap); ctx.lineTo(W - bGap, H - bGap); ctx.lineTo(W - bGap, H - bGap - bSize); ctx.stroke()
-
-      // Crosshair
-      const cx = W / 2, cy = H / 2
-      const pulse = Math.sin(time * 0.04) * 0.5 + 0.5
-      ctx.strokeStyle = `rgba(232,255,0,${0.04 + pulse * 0.03})`
-      ctx.lineWidth = 0.5
-      ctx.setLineDash([4, 10])
-      ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, H); ctx.stroke()
-      ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(W, cy); ctx.stroke()
-      ctx.setLineDash([])
-
-      time++
+      t++
       animId = requestAnimationFrame(draw)
     }
 
@@ -122,11 +128,11 @@ export default function HeroSection() {
     offset: ['start start', 'end start'],
   })
 
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 120])
+  const heroY       = useTransform(scrollYProgress, [0, 1], [0, 120])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
-  const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.95])
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -60])
-  const subtitleY = useTransform(scrollYProgress, [0, 1], [0, -30])
+  const heroScale   = useTransform(scrollYProgress, [0, 0.8], [1, 0.95])
+  const titleY      = useTransform(scrollYProgress, [0, 1], [0, -60])
+  const subtitleY   = useTransform(scrollYProgress, [0, 1], [0, -30])
 
   return (
     <section
@@ -169,7 +175,7 @@ export default function HeroSection() {
               src={`${import.meta.env.BASE_URL}nie-logo.svg`}
               alt="NIE"
               className="w-5 h-5 object-contain"
-              style={{ filter: 'brightness(0) invert(1)', opacity: 0.65 }}
+              style={{ filter: 'brightness(3) saturate(1.2)', opacity: 0.85 }}
             />
             <span className="text-[9px] font-semibold tracking-[0.2em] uppercase" style={{ color: 'rgba(245,245,245,0.5)' }}>
               The National Institute of Engineering, Mysuru
@@ -311,11 +317,11 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Stats — real UAV club data */}
+          {/* Stats */}
           <div className="flex gap-3 flex-wrap">
-            <StatBadge number="UAVs" label="We Build & Fly" delay={1.4} />
-            <StatBadge number="4" label="Tech Domains" delay={1.55} />
-            <StatBadge number="NIE" label="Autonomous Unit" delay={1.7} />
+            <StatBadge number="UAVs" label="We Build &amp; Fly" delay={1.4} />
+            <StatBadge number="4"    label="Tech Domains"      delay={1.55} />
+            <StatBadge number="NIE"  label="Autonomous Unit"   delay={1.7} />
           </div>
         </motion.div>
 

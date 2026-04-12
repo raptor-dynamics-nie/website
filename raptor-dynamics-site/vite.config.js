@@ -9,4 +9,23 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  build: {
+    // Increase chunk warning threshold (framer-motion is large by design)
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        // Function form required by Rolldown (Vite 8)
+        manualChunks(id) {
+          if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/')) {
+            return 'vendor-react'
+          }
+          if (id.includes('node_modules/framer-motion')) {
+            return 'vendor-motion'
+          }
+        },
+      },
+    },
+    // Target modern browsers for smaller output
+    target: 'es2020',
+  },
 })

@@ -34,6 +34,28 @@
     font-family: var(--font-body);
     overflow-x: hidden;
     cursor: none;
+    /* Promote entire page to its own stacking context */
+    isolation: isolate;
+  }
+
+  /* Skip rendering off-screen sections — biggest single perf win */
+  section {
+    content-visibility: auto;
+    /* Reserve approximate section height so scroll position stays stable */
+    contain-intrinsic-size: 0 600px;
+  }
+
+  /* Promote animated elements to GPU layer */
+  [data-motion], canvas {
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Avoid layout thrash on images */
+  img {
+    display: block;
+    max-width: 100%;
   }
 
   /* Custom scrollbar */

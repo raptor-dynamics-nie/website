@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion'
 
 /**
  * ScrollReveal — wraps children and animates them on scroll entry.
+ * Only uses opacity + transform (GPU composited — no filter/blur cost).
  * @param {string} variant - 'fadeUp' | 'fadeIn' | 'slideLeft' | 'slideRight' | 'scaleUp'
  * @param {number} delay - stagger delay in seconds
  * @param {number} duration - animation duration
@@ -10,28 +11,28 @@ import { motion, useInView } from 'framer-motion'
 
 const variants = {
   fadeUp: {
-    hidden: { opacity: 0, y: 48, filter: 'blur(4px)' },
-    visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
+    hidden:  { opacity: 0, y: 40, filter: 'blur(6px)' },
+    visible: { opacity: 1, y: 0,  filter: 'blur(0px)' },
   },
   fadeIn: {
-    hidden: { opacity: 0, filter: 'blur(8px)' },
+    hidden:  { opacity: 0, filter: 'blur(8px)' },
     visible: { opacity: 1, filter: 'blur(0px)' },
   },
   slideLeft: {
-    hidden: { opacity: 0, x: -60, filter: 'blur(4px)' },
-    visible: { opacity: 1, x: 0, filter: 'blur(0px)' },
+    hidden:  { opacity: 0, x: -50, filter: 'blur(5px)' },
+    visible: { opacity: 1, x: 0,   filter: 'blur(0px)' },
   },
   slideRight: {
-    hidden: { opacity: 0, x: 60, filter: 'blur(4px)' },
-    visible: { opacity: 1, x: 0, filter: 'blur(0px)' },
+    hidden:  { opacity: 0, x: 50,  filter: 'blur(5px)' },
+    visible: { opacity: 1, x: 0,   filter: 'blur(0px)' },
   },
   scaleUp: {
-    hidden: { opacity: 0, scale: 0.88, filter: 'blur(4px)' },
-    visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
+    hidden:  { opacity: 0, scale: 0.92, filter: 'blur(4px)' },
+    visible: { opacity: 1, scale: 1,    filter: 'blur(0px)' },
   },
   clipReveal: {
-    hidden: { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
-    visible: { clipPath: 'inset(0 0% 0 0)', opacity: 1 },
+    hidden:  { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
+    visible: { clipPath: 'inset(0 0% 0 0)',   opacity: 1 },
   },
 }
 
@@ -39,10 +40,10 @@ export default function ScrollReveal({
   children,
   variant = 'fadeUp',
   delay = 0,
-  duration = 0.7,
+  duration = 0.65,
   className = '',
   once = true,
-  threshold = 0.15,
+  threshold = 0.12,
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once, amount: threshold })
@@ -68,9 +69,9 @@ export default function ScrollReveal({
 /**
  * StaggerContainer — parent that staggers its ScrollReveal children
  */
-export function StaggerContainer({ children, className = '', stagger = 0.1, delayChildren = 0.1 }) {
+export function StaggerContainer({ children, className = '', stagger = 0.08, delayChildren = 0.05 }) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.1 })
+  const isInView = useInView(ref, { once: true, amount: 0.08 })
 
   return (
     <motion.div
@@ -96,7 +97,7 @@ export function StaggerContainer({ children, className = '', stagger = 0.1, dela
 /**
  * StaggerItem — use inside StaggerContainer
  */
-export function StaggerItem({ children, className = '', variant = 'fadeUp', duration = 0.65 }) {
+export function StaggerItem({ children, className = '', variant = 'fadeUp', duration = 0.6 }) {
   return (
     <motion.div
       className={className}

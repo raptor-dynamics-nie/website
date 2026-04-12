@@ -2,21 +2,41 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Domains', href: '#domains' },
-  { label: 'Mission', href: '#mission' },
-  { label: 'Team', href: '#team' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About',   href: '#about',   id: 'about'   },
+  { label: 'Domains', href: '#domains', id: 'domains' },
+  { label: 'Mission', href: '#mission', id: 'mission' },
+  { label: 'Team',    href: '#team',    id: 'team'    },
+  { label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled,       setScrolled]       = useState(false)
+  const [menuOpen,       setMenuOpen]       = useState(false)
+  const [activeSection,  setActiveSection]  = useState('')
 
+  // Scroll pill effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Active section tracker via IntersectionObserver
+  useEffect(() => {
+    const observers = []
+    navLinks.forEach(({ id }) => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id)
+        },
+        { threshold: 0.25, rootMargin: '-80px 0px -30% 0px' }
+      )
+      obs.observe(el)
+      observers.push(obs)
+    })
+    return () => observers.forEach((o) => o.disconnect())
   }, [])
 
   const menuVariants = {
@@ -52,10 +72,17 @@ export default function Navbar() {
         <div
           className="mx-auto mt-3 flex items-center justify-between px-4 py-2.5 rounded-full transition-all duration-500"
           style={{
-            background: scrolled ? 'rgba(5,5,5,0.94)' : 'transparent',
-            backdropFilter: scrolled ? 'blur(20px)' : 'none',
-            border: scrolled ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
-            boxShadow: scrolled ? '0 8px 40px rgba(0,0,0,0.6)' : 'none',
+            background:    scrolled
+              ? 'rgba(255,255,255,0.06)'
+              : 'transparent',
+            backdropFilter: scrolled ? 'blur(28px) saturate(180%) brightness(1.08)' : 'none',
+            WebkitBackdropFilter: scrolled ? 'blur(28px) saturate(180%) brightness(1.08)' : 'none',
+            border:        scrolled
+              ? '1px solid rgba(255,255,255,0.14)'
+              : '1px solid transparent',
+            boxShadow: scrolled
+              ? 'inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 32px rgba(0,0,0,0.35), 0 1px 0 rgba(0,0,0,0.2)'
+              : 'none',
           }}
         >
           {/* Left: Club Logo + Name */}
@@ -76,42 +103,58 @@ export default function Navbar() {
             </div>
           </motion.a>
 
-          {/* Center: Nav links */}
+          {/* Center: Nav links with active underline */}
           <div className="hidden md:flex items-center gap-7">
-            {navLinks.map((link) => (
-              <motion.a
-                key={link.label}
-                href={link.href}
-                className="relative text-xs font-semibold tracking-widest uppercase overflow-hidden"
-                style={{ color: 'rgba(245,245,245,0.6)' }}
-                whileHover={{ color: '#f5f5f5' }}
-              >
-                {link.label}
-                <motion.span
-                  className="absolute bottom-0 left-0 h-px w-full origin-left"
-                  style={{ background: 'var(--color-accent)' }}
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id
+              return (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  className="relative text-xs font-semibold tracking-widest uppercase pb-1"
+                  style={{ color: isActive ? '#f5f5f5' : 'rgba(245,245,245,0.6)' }}
+                  whileHover={{ color: '#f5f5f5' }}
+                  onClick={() => setActiveSection(link.id)}
+                >
+                  {link.label}
+                  {/* Hover underline */}
+                  <motion.span
+                    className="absolute bottom-0 left-0 h-px w-full origin-left"
+                    style={{ background: 'var(--color-accent)' }}
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  {/* Active section underline — persistent */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active-underline"
+                      className="absolute bottom-0 left-0 h-[2px] w-full"
+                      style={{ background: 'var(--color-accent)', borderRadius: 2 }}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    />
+                  )}
+                </motion.a>
+              )
+            })}
           </div>
 
-          {/* Right: NIE logo + CTA */}
+          {/* Right: NIE logo (official colors) + CTA */}
           <div className="flex items-center gap-3">
-            {/* College logo */}
+            {/* College logo — official navy + light-blue palette */}
             <div
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full"
-              style={{ border: '1px solid rgba(255,255,255,0.08)' }}
+              style={{ border: '1px solid rgba(41,41,102,0.5)', background: 'rgba(41,41,102,0.12)' }}
             >
               <img
                 src={`${import.meta.env.BASE_URL}nie-logo.svg`}
                 alt="NIE University"
                 className="w-7 h-7 object-contain"
-                style={{ filter: 'brightness(0) invert(1)', opacity: 0.75 }}
+                style={{ filter: 'brightness(3) saturate(1.2)' }}
               />
-              <span className="text-[9px] tracking-widest uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.45)' }}>
+              <span className="text-[9px] tracking-widest uppercase font-semibold" style={{ color: 'rgba(178,222,247,0.85)' }}>
                 NIE Mysuru
               </span>
             </div>
@@ -177,9 +220,12 @@ export default function Navbar() {
                   initial="closed"
                   animate="open"
                   exit="closed"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={() => { setMenuOpen(false); setActiveSection(link.id) }}
                   className="font-display text-5xl tracking-widest leading-none border-b pb-4"
-                  style={{ color: 'var(--color-text)', borderColor: 'var(--color-border)' }}
+                  style={{
+                    color: activeSection === link.id ? 'var(--color-accent)' : 'var(--color-text)',
+                    borderColor: 'var(--color-border)',
+                  }}
                   whileHover={{ color: 'var(--color-accent)', x: 8 }}
                   transition={{ duration: 0.2 }}
                 >
@@ -187,10 +233,15 @@ export default function Navbar() {
                 </motion.a>
               ))}
             </div>
-            {/* College attribution in mobile menu */}
+            {/* College attribution with official colors */}
             <div className="mt-10 flex items-center gap-3">
-              <img src={`${import.meta.env.BASE_URL}nie-logo.svg`} alt="NIE" className="w-8 h-8 opacity-40" style={{ filter: 'brightness(10)' }} />
-              <span className="text-xs tracking-widest uppercase" style={{ color: 'rgba(245,245,245,0.3)' }}>
+              <img
+                src={`${import.meta.env.BASE_URL}nie-logo.svg`}
+                alt="NIE"
+                className="w-8 h-8"
+                style={{ filter: 'brightness(3) saturate(1.2)' }}
+              />
+              <span className="text-xs tracking-widest uppercase" style={{ color: 'rgba(178,222,247,0.5)' }}>
                 The National Institute of Engineering, Mysuru
               </span>
             </div>

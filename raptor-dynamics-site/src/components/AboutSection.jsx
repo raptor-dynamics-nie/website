@@ -111,7 +111,7 @@ export default function AboutSection() {
                   src={`${import.meta.env.BASE_URL}nie-logo.svg`}
                   alt="NIE University"
                   className="w-9 h-9 object-contain flex-shrink-0"
-                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.55 }}
+                  style={{ filter: 'brightness(3) saturate(1.2)', opacity: 0.85 }}
                 />
                 <div>
                   <div className="text-xs font-semibold" style={{ color: 'rgba(245,245,245,0.7)' }}>
