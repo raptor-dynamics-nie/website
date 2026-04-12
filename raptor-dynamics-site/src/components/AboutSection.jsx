@@ -38,10 +38,10 @@ export default function AboutSection() {
               {/* Club logo centred */}
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
                 <motion.img
-                  src="/raptor-logo.png"
+                  src={`${import.meta.env.BASE_URL}raptor-logo.png`}
                   alt="Raptor Dynamics"
                   className="w-48 md:w-64 object-contain"
-                  style={{ filter: 'invert(1) brightness(10) sepia(1) saturate(100) hue-rotate(15deg)', opacity: 0.12 }}
+                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.15 }}
                   animate={{ scale: [1, 1.03, 1] }}
                   transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
                 />
@@ -110,10 +110,10 @@ export default function AboutSection() {
                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
               >
                 <img
-                  src="/nie-logo.svg"
+                  src={`${import.meta.env.BASE_URL}nie-logo.svg`}
                   alt="NIE University"
-                  className="w-8 h-8 object-contain flex-shrink-0"
-                  style={{ filter: 'brightness(10) opacity(0.5)' }}
+                  className="w-9 h-9 object-contain flex-shrink-0"
+                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.55 }}
                 />
                 <div>
                   <div className="text-xs font-semibold" style={{ color: 'rgba(245,245,245,0.7)' }}>

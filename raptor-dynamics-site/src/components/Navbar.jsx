@@ -59,12 +59,12 @@ export default function Navbar() {
           }}
         >
           {/* Left: Club Logo + Name */}
-          <motion.a href="#hero" className="flex items-center gap-2.5 group" whileHover={{ scale: 1.02 }}>
+          <motion.a href="#hero" className="flex items-center gap-3 group" whileHover={{ scale: 1.02 }}>
             <img
-              src="/raptor-logo.png"
+              src={`${import.meta.env.BASE_URL}raptor-logo.png`}
               alt="Raptor Dynamics Logo"
-              className="w-9 h-9 object-contain"
-              style={{ filter: 'invert(1) brightness(10) sepia(1) saturate(100) hue-rotate(15deg)' }}
+              className="w-16 h-16 object-contain flex-shrink-0"
+              style={{ filter: 'brightness(0) invert(1)', opacity: 0.95 }}
             />
             <div className="hidden sm:flex flex-col leading-none">
               <span className="font-display text-base tracking-widest" style={{ color: 'var(--color-text)' }}>
@@ -106,10 +106,10 @@ export default function Navbar() {
               style={{ border: '1px solid rgba(255,255,255,0.08)' }}
             >
               <img
-                src="/nie-logo.svg"
+                src={`${import.meta.env.BASE_URL}nie-logo.svg`}
                 alt="NIE University"
-                className="w-5 h-5 object-contain opacity-70"
-                style={{ filter: 'brightness(10)' }}
+                className="w-7 h-7 object-contain"
+                style={{ filter: 'brightness(0) invert(1)', opacity: 0.75 }}
               />
               <span className="text-[9px] tracking-widest uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.45)' }}>
                 NIE Mysuru
@@ -189,7 +189,7 @@ export default function Navbar() {
             </div>
             {/* College attribution in mobile menu */}
             <div className="mt-10 flex items-center gap-3">
-              <img src="/nie-logo.svg" alt="NIE" className="w-8 h-8 opacity-40" style={{ filter: 'brightness(10)' }} />
+              <img src={`${import.meta.env.BASE_URL}nie-logo.svg`} alt="NIE" className="w-8 h-8 opacity-40" style={{ filter: 'brightness(10)' }} />
               <span className="text-xs tracking-widest uppercase" style={{ color: 'rgba(245,245,245,0.3)' }}>
                 The National Institute of Engineering, Mysuru
               </span>

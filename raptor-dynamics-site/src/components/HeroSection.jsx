@@ -166,10 +166,10 @@ export default function HeroSection() {
             style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
           >
             <img
-              src="/nie-logo.svg"
+              src={`${import.meta.env.BASE_URL}nie-logo.svg`}
               alt="NIE"
-              className="w-4 h-4 object-contain"
-              style={{ filter: 'brightness(10) opacity(0.7)' }}
+              className="w-5 h-5 object-contain"
+              style={{ filter: 'brightness(0) invert(1)', opacity: 0.65 }}
             />
             <span className="text-[9px] font-semibold tracking-[0.2em] uppercase" style={{ color: 'rgba(245,245,245,0.5)' }}>
               The National Institute of Engineering, Mysuru
@@ -201,10 +201,10 @@ export default function HeroSection() {
             className="hidden md:block flex-shrink-0 mt-2"
           >
             <img
-              src="/raptor-logo.png"
+              src={`${import.meta.env.BASE_URL}raptor-logo.png`}
               alt="Raptor Dynamics"
               className="w-24 lg:w-32 object-contain"
-              style={{ filter: 'invert(1) brightness(10) sepia(1) saturate(100) hue-rotate(15deg)' }}
+              style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }}
             />
           </motion.div>
 

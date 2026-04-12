@@ -31,10 +31,10 @@ export default function Footer() {
               {/* Logos */}
               <div className="flex items-center gap-4 mb-5">
                 <img
-                  src="/raptor-logo.png"
+                  src={`${import.meta.env.BASE_URL}raptor-logo.png`}
                   alt="Raptor Dynamics"
-                  className="w-12 h-12 object-contain"
-                  style={{ filter: 'invert(1) brightness(10) sepia(1) saturate(100) hue-rotate(15deg)' }}
+                  className="w-14 h-14 object-contain"
+                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.92 }}
                 />
                 <div>
                   <div className="font-display text-xl tracking-widest" style={{ color: 'var(--color-text)' }}>
@@ -57,10 +57,10 @@ export default function Footer() {
                 style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}
               >
                 <img
-                  src="/nie-logo.svg"
+                  src={`${import.meta.env.BASE_URL}nie-logo.svg`}
                   alt="NIE University"
-                  className="w-5 h-5 object-contain"
-                  style={{ filter: 'brightness(10) opacity(0.5)' }}
+                  className="w-6 h-6 object-contain"
+                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.6 }}
                 />
                 <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: 'rgba(245,245,245,0.35)' }}>
                   NIE Mysuru · VTU Autonomous · Est. 1946
