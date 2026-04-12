@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
-// Real committee from PDF — names complete, student roles as placeholders (PDF left them blank)
 const committee = {
   patrons: [
     {
@@ -52,14 +51,30 @@ const committee = {
     { role: 'Head — Operations & Safety', desc: 'Flight operations management and safety compliance' },
     { role: 'Head — Training, Events & Outreach', desc: 'Workshops, competitions, and community engagements' },
     { role: 'Head — Documentation, Media & Logistics', desc: 'Club records, media production, and resource management' },
-    { role: 'Executive Members (×4)', desc: 'Supporting all committees across the club\'s activities' },
+    { role: 'Executive Members (×4)', desc: "Supporting all committees across the club's activities" },
   ],
 }
 
+// Map name → exact filename in public/
+const photoMap = {
+  'Dr. Nagendra Parashar':   'nagendra parashar.jpg',
+  'Dr. Rohini Nagapadma':    'rohini nagapadman.avif',
+  'Dr. H N Divakar':         'divakar h n.avif',
+  'Dr. Rajalekshmi Kishore': 'rajalekshmi kishore.avif',
+  'Dr. Ashok K':             'ashok k.avif',
+  'Dr. Anand A':             'anand.avif',
+}
+
 function PersonCard({ person, accent = false }) {
+  const photoFile = photoMap[person.name]
+  // encodeURIComponent handles the space in filenames (e.g. "nagendra parashar.jpg")
+  const photoSrc = photoFile
+    ? `${import.meta.env.BASE_URL}${encodeURIComponent(photoFile)}`
+    : null
+
   return (
     <motion.div
-      className="relative flex flex-col gap-3 p-5 clip-corner"
+      className="relative flex flex-col p-5 clip-corner"
       style={{
         background: accent ? 'rgba(232,255,0,0.05)' : 'rgba(255,255,255,0.025)',
         border: `1px solid ${accent ? 'rgba(232,255,0,0.15)' : 'rgba(255,255,255,0.07)'}`,
@@ -70,17 +85,31 @@ function PersonCard({ person, accent = false }) {
       }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
     >
-      {/* Avatar */}
-      <div className="flex items-start gap-4">
+      <div className="flex items-center gap-4">
+        {/* Photo / initials avatar */}
         <div
-          className="w-11 h-11 flex items-center justify-center flex-shrink-0 font-display text-sm clip-corner"
+          className="w-16 h-16 flex-shrink-0 overflow-hidden clip-corner flex items-center justify-center"
           style={{
-            background: accent ? 'rgba(232,255,0,0.15)' : 'rgba(255,255,255,0.07)',
-            color: accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.6)',
+            background: accent ? 'rgba(232,255,0,0.12)' : 'rgba(255,255,255,0.07)',
+            border: `1px solid ${accent ? 'rgba(232,255,0,0.25)' : 'rgba(255,255,255,0.1)'}`,
           }}
         >
-          {person.initial}
+          {photoSrc ? (
+            <img
+              src={photoSrc}
+              alt={person.name}
+              className="w-full h-full object-cover object-top"
+            />
+          ) : (
+            <span
+              className="font-display text-lg"
+              style={{ color: accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.6)' }}
+            >
+              {person.initial}
+            </span>
+          )}
         </div>
+
         <div>
           <div
             className="text-[9px] tracking-[0.2em] uppercase font-semibold mb-0.5"
@@ -131,7 +160,7 @@ export default function TeamSection() {
           </ScrollReveal>
           <ScrollReveal variant="fadeUp" delay={0.2} className="max-w-xs">
             <p className="text-sm leading-relaxed" style={{ color: 'rgba(245,245,245,0.45)' }}>
-              Faculty mentors from Mechanical and Electronics & Communication engineering,
+              Faculty mentors from Mechanical and Electronics &amp; Communication engineering,
               guided by visionary institutional leadership.
             </p>
           </ScrollReveal>

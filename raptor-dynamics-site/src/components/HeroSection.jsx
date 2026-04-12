@@ -192,19 +192,19 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Hero logo + heading */}
-        <div className="flex items-start gap-6 md:gap-10 mb-6">
+        <div className="flex items-center gap-4 md:gap-8 mb-6 justify-start md:ml-[8%]">
           {/* Club logo mark */}
           <motion.div
             initial={{ opacity: 0, scale: 0.7, rotate: -10 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="hidden md:block flex-shrink-0 mt-2"
+            className="hidden md:block flex-shrink-0"
           >
             <img
               src={`${import.meta.env.BASE_URL}raptor-logo.png`}
               alt="Raptor Dynamics"
-              className="w-24 lg:w-32 object-contain"
-              style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }}
+              className="w-64 lg:w-80 object-contain"
+              style={{ filter: 'brightness(0) invert(1)', opacity: 0.92 }}
             />
           </motion.div>
 

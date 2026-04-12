@@ -50,7 +50,7 @@ export default function AboutSection() {
                     RAPTOR DYNAMICS
                   </div>
                   <div className="text-xs tracking-[0.4em] uppercase mt-1" style={{ color: 'rgba(245,245,245,0.15)' }}>
-                    est. 2024 · NIE Mysuru
+                    est. 2026 · NIE Mysuru
                   </div>
                 </div>
               </div>
@@ -60,9 +60,7 @@ export default function AboutSection() {
                 <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--color-accent)', animation: 'pulse-dot 2s infinite' }} />
                 <span className="text-[10px] tracking-widest uppercase" style={{ color: 'rgba(245,245,245,0.3)' }}>Systems Online</span>
               </div>
-              <div className="absolute bottom-5 right-5 text-right">
-                <div className="font-mono text-xs" style={{ color: 'rgba(245,245,245,0.15)' }}>NIE · VTU Autonomous</div>
-              </div>
+
             </div>
           </ScrollReveal>
 
