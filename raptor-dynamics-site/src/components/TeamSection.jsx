@@ -76,8 +76,11 @@ function PersonCard({ person, accent = false }) {
     <motion.div
       className="relative flex flex-col p-5 clip-corner"
       style={{
-        background: accent ? 'rgba(232,255,0,0.05)' : 'rgba(255,255,255,0.025)',
-        border: `1px solid ${accent ? 'rgba(232,255,0,0.15)' : 'rgba(255,255,255,0.07)'}`,
+        background: accent ? 'rgba(232,255,0,0.06)' : 'rgba(255,255,255,0.04)',
+        border: `1px solid ${accent ? 'rgba(232,255,0,0.18)' : 'rgba(255,255,255,0.1)'}`,
+        backdropFilter: 'blur(20px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 24px rgba(0,0,0,0.18)',
       }}
       whileHover={{
         y: -4,
@@ -230,7 +233,7 @@ export default function TeamSection() {
             <StaggerItem key={i} variant="fadeUp">
               <motion.div
                 className="flex items-start gap-4 p-4 clip-corner group"
-                style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)' }}
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(16px) saturate(160%)', WebkitBackdropFilter: 'blur(16px) saturate(160%)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12)' }}
                 whileHover={{ borderColor: 'rgba(232,255,0,0.25)', background: 'rgba(232,255,0,0.03)' }}
                 transition={{ duration: 0.25 }}
               >

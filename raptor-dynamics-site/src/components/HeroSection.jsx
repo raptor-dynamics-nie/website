@@ -106,9 +106,11 @@ function StatBadge({ number, label, delay }) {
       whileHover={{ scale: 1.05, borderColor: 'rgba(232,255,0,0.4)' }}
       className="px-4 py-3 clip-corner"
       style={{
-        background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        backdropFilter: 'blur(12px)',
+        background: 'rgba(255,255,255,0.07)',
+        border: '1px solid rgba(255,255,255,0.14)',
+        backdropFilter: 'blur(20px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.18), 0 4px 16px rgba(0,0,0,0.2)',
       }}
     >
       <div className="font-display text-2xl leading-none" style={{ color: 'var(--color-accent)' }}>
@@ -169,7 +171,13 @@ export default function HeroSection() {
           {/* NIE Badge */}
           <div
             className="flex items-center gap-2 px-3 py-1.5 rounded-full"
-            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+            style={{
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.14)',
+              backdropFilter: 'blur(20px) saturate(160%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.18)',
+            }}
           >
             <img
               src={`${import.meta.env.BASE_URL}nie-logo.svg`}

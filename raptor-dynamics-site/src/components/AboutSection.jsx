@@ -2,10 +2,10 @@ import { motion } from 'framer-motion'
 import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
 const pillars = [
-  { label: 'UAV Systems', value: 'Full-Stack', sub: 'Fabrication to Flight' },
-  { label: 'Competitions', value: 'National &', sub: 'International' },
-  { label: 'Real Projects', value: 'Hands-On', sub: 'No Lab Simulations' },
-  { label: 'Industry Links', value: 'Bridge To', sub: 'Aerial Robotics Sector' },
+  { label: 'UAV Systems',     value: 'Full-Stack', sub: 'Fabrication to Flight'         },
+  { label: 'Competitions',    value: 'State · National', sub: '& International'          },
+  { label: 'Real Projects',   value: 'Hands-On', sub: 'With Simulations'                },
+  { label: 'Industry Links',  value: 'Bridge To', sub: 'Aerial Robotics Sector'         },
 ]
 
 export default function AboutSection() {

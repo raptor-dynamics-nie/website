@@ -70,8 +70,11 @@ function DomainCard({ domain, index }) {
     <motion.div
       className="relative group overflow-hidden clip-corner"
       style={{
-        background: domain.accent ? 'rgba(232,255,0,0.05)' : 'rgba(255,255,255,0.025)',
-        border: `1px solid ${domain.accent ? 'rgba(232,255,0,0.2)' : 'rgba(255,255,255,0.07)'}`,
+        background: domain.accent ? 'rgba(232,255,0,0.06)' : 'rgba(255,255,255,0.04)',
+        border: `1px solid ${domain.accent ? 'rgba(232,255,0,0.2)' : 'rgba(255,255,255,0.1)'}`,
+        backdropFilter: 'blur(20px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 24px rgba(0,0,0,0.2)',
       }}
       whileHover={{
         y: -6,
@@ -136,8 +139,11 @@ function AppCard({ app, index }) {
     <motion.div
       className="relative p-5 clip-corner group"
       style={{
-        background: 'rgba(255,255,255,0.025)',
-        border: '1px solid rgba(255,255,255,0.07)',
+        background: 'rgba(255,255,255,0.04)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        backdropFilter: 'blur(20px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 24px rgba(0,0,0,0.2)',
       }}
       whileHover={{ borderColor: 'rgba(232,255,0,0.3)', y: -4 }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}

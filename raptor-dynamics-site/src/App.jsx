@@ -8,6 +8,7 @@ import HeroSection from './components/HeroSection'
 // Lazy-load all below-fold sections — they are NOT needed for initial paint
 const AboutSection   = lazy(() => import('./components/AboutSection'))
 const DomainsSection = lazy(() => import('./components/DomainsSection'))
+const EventsSection  = lazy(() => import('./components/EventsSection'))
 const MissionSection = lazy(() => import('./components/MissionSection'))
 const TeamSection    = lazy(() => import('./components/TeamSection'))
 const ContactSection = lazy(() => import('./components/ContactSection'))
@@ -41,6 +42,9 @@ export default function App() {
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <DomainsSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <EventsSection />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <MissionSection />

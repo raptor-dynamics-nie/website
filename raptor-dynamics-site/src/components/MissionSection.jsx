@@ -117,7 +117,13 @@ export default function MissionSection() {
       <ScrollReveal variant="scaleUp" delay={0} className="mb-20">
         <div
           className="relative overflow-hidden clip-corner-lg p-8 md:p-12"
-          style={{ background: 'rgba(232,255,0,0.04)', border: '1px solid rgba(232,255,0,0.12)' }}
+          style={{
+            background: 'rgba(232,255,0,0.05)',
+            border: '1px solid rgba(232,255,0,0.14)',
+            backdropFilter: 'blur(24px) saturate(160%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 32px rgba(0,0,0,0.2)',
+          }}
         >
           {/* Large ghost text */}
           <div
@@ -210,7 +216,13 @@ export default function MissionSection() {
             <StaggerItem key={i} variant="slideLeft">
               <motion.div
                 className="flex items-start gap-4 p-4 clip-corner group"
-                style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)' }}
+                style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  backdropFilter: 'blur(16px) saturate(160%)',
+                  WebkitBackdropFilter: 'blur(16px) saturate(160%)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)',
+                }}
                 whileHover={{ borderColor: 'rgba(232,255,0,0.25)', background: 'rgba(232,255,0,0.03)' }}
                 transition={{ duration: 0.25 }}
               >

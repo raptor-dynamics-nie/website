@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 const navLinks = [
   { label: 'About',   href: '#about',   id: 'about'   },
   { label: 'Domains', href: '#domains', id: 'domains' },
+  { label: 'Events',  href: '#events',  id: 'events'  },
   { label: 'Mission', href: '#mission', id: 'mission' },
   { label: 'Team',    href: '#team',    id: 'team'    },
   { label: 'Contact', href: '#contact', id: 'contact' },
@@ -144,9 +145,14 @@ export default function Navbar() {
           {/* Right: NIE logo (official colors) + CTA */}
           <div className="flex items-center gap-3">
             {/* College logo — official navy + light-blue palette */}
-            <div
+            <motion.a
+              href="https://www.nie.ac.in"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full"
-              style={{ border: '1px solid rgba(41,41,102,0.5)', background: 'rgba(41,41,102,0.12)' }}
+              style={{ border: '1px solid rgba(41,41,102,0.5)', background: 'rgba(41,41,102,0.12)', cursor: 'pointer' }}
+              whileHover={{ borderColor: 'rgba(178,222,247,0.5)', background: 'rgba(41,41,102,0.25)', scale: 1.04 }}
+              transition={{ duration: 0.2 }}
             >
               <img
                 src={`${import.meta.env.BASE_URL}nie-logo.svg`}
@@ -157,7 +163,7 @@ export default function Navbar() {
               <span className="text-[9px] tracking-widest uppercase font-semibold" style={{ color: 'rgba(178,222,247,0.85)' }}>
                 NIE Mysuru
               </span>
-            </div>
+            </motion.a>
 
             <motion.a
               href="#contact"

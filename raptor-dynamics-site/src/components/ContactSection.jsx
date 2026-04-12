@@ -242,7 +242,13 @@ export default function ContactSection() {
             <ScrollReveal key={label} variant="slideRight" delay={i * 0.08}>
               <motion.div
                 className="flex items-start gap-4 p-4 clip-corner"
-                style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)' }}
+                style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  backdropFilter: 'blur(20px) saturate(160%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12)',
+                }}
                 whileHover={{ borderColor: 'rgba(232,255,0,0.25)', background: 'rgba(232,255,0,0.03)' }}
                 transition={{ duration: 0.25 }}
               >
@@ -259,7 +265,13 @@ export default function ContactSection() {
           <ScrollReveal variant="slideRight" delay={0.55}>
             <div
               className="p-4 clip-corner"
-              style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)' }}
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                backdropFilter: 'blur(20px) saturate(160%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12)',
+              }}
             >
               <div className="text-[10px] tracking-[0.25em] uppercase font-semibold mb-3" style={{ color: 'rgba(245,245,245,0.35)' }}>
                 Follow Us
