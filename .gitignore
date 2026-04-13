@@ -14,3 +14,9 @@ raptor-dynamics-site/.vite/
 # OS
 .DS_Store
 Thumbs.db
+
+# Temp working folders
+drone-frames/
+drone-frames-new/
+new-set-frames/
+*.zip
