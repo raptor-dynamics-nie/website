@@ -8,12 +8,14 @@ const committee = {
       role: 'Patron',
       title: 'Principal, NIE Mysuru',
       initial: 'NP',
+      linkedin: 'https://www.linkedin.com/in/dr-prof-b-s-nagendra-parashar-16b14330/',
     },
     {
       name: 'Dr. Rohini Nagapadma',
       role: 'Patron',
       title: 'Chief Innovation Officer, NIE',
       initial: 'RN',
+      linkedin: '',
     },
   ],
   chiefAdvisors: [
@@ -22,12 +24,14 @@ const committee = {
       role: 'Chief Advisor',
       title: 'Professor & Head, Dept. of ME — NIE',
       initial: 'HD',
+      linkedin: '',
     },
     {
       name: 'Dr. Rajalekshmi Kishore',
       role: 'Chief Advisor',
       title: 'Professor & Head, Dept. of E&C — NIE',
       initial: 'RK',
+      linkedin: 'https://www.linkedin.com/in/rajalekshmi-kishore-9883b7220',
     },
   ],
   facultyAdvisors: [
@@ -36,12 +40,14 @@ const committee = {
       role: 'Faculty Advisor',
       title: 'Associate Professor, Dept. of E&C — NIE',
       initial: 'AK',
+      linkedin: 'https://www.linkedin.com/in/dr-ashok-k-918782a7',
     },
     {
       name: 'Dr. Anand A',
       role: 'Faculty Advisor',
       title: 'Assistant Professor, Dept. of ME — NIE',
       initial: 'AA',
+      linkedin: 'https://www.linkedin.com/in/dr-anand-a-34646212',
     },
   ],
   studentRoles: [
@@ -67,69 +73,116 @@ const photoMap = {
 
 function PersonCard({ person, accent = false }) {
   const photoFile = photoMap[person.name]
-  // encodeURIComponent handles the space in filenames (e.g. "nagendra parashar.jpg")
   const photoSrc = photoFile
     ? `${import.meta.env.BASE_URL}${encodeURIComponent(photoFile)}`
     : null
 
   return (
     <motion.div
-      className="relative flex flex-col p-5 clip-corner"
+      className="relative flex flex-col items-center p-6 clip-corner"
       style={{
         background: accent ? 'rgba(232,255,0,0.06)' : 'rgba(255,255,255,0.04)',
         border: `1px solid ${accent ? 'rgba(232,255,0,0.18)' : 'rgba(255,255,255,0.1)'}`,
         backdropFilter: 'blur(20px) saturate(160%)',
         WebkitBackdropFilter: 'blur(20px) saturate(160%)',
-        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 24px rgba(0,0,0,0.18)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 24px rgba(0,0,0,0.2)',
       }}
       whileHover={{
-        y: -4,
+        y: -6,
         borderColor: accent ? 'rgba(232,255,0,0.4)' : 'rgba(255,255,255,0.2)',
+        boxShadow: '0 16px 40px rgba(0,0,0,0.35)',
       }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
     >
-      <div className="flex items-center gap-4">
-        {/* Photo / initials avatar */}
-        <div
-          className="w-16 h-16 flex-shrink-0 overflow-hidden clip-corner flex items-center justify-center"
+      {/* Circular photo */}
+      <div
+        className="w-24 h-24 mb-4 overflow-hidden flex items-center justify-center flex-shrink-0"
+        style={{
+          borderRadius: '50%',
+          border: `2px solid ${accent ? 'rgba(232,255,0,0.35)' : 'rgba(255,255,255,0.12)'}`,
+          background: accent ? 'rgba(232,255,0,0.08)' : 'rgba(255,255,255,0.06)',
+        }}
+      >
+        {photoSrc ? (
+          <img
+            src={photoSrc}
+            alt={person.name}
+            className="w-full h-full object-cover object-top"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <span
+            className="font-display text-2xl"
+            style={{ color: accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.5)' }}
+          >
+            {person.initial}
+          </span>
+        )}
+      </div>
+
+      {/* Name */}
+      <div
+        className="font-semibold text-sm text-center leading-snug mb-2"
+        style={{ color: 'var(--color-text)' }}
+      >
+        {person.name}
+      </div>
+
+      {/* Role pill */}
+      <div
+        className="px-3 py-0.5 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full"
+        style={{
+          background: accent ? 'rgba(232,255,0,0.12)' : 'rgba(255,255,255,0.07)',
+          color: accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.5)',
+          border: `1px solid ${accent ? 'rgba(232,255,0,0.25)' : 'rgba(255,255,255,0.1)'}`,
+        }}
+      >
+        {person.role}
+      </div>
+
+      {/* Department */}
+      <div
+        className="text-[10px] mt-2 text-center leading-snug"
+        style={{ color: 'rgba(245,245,245,0.35)' }}
+      >
+        {person.title}
+      </div>
+
+      {/* LinkedIn icon button */}
+      {person.linkedin && (
+        <a
+          href={person.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${person.name} on LinkedIn`}
+          className="mt-4 flex items-center justify-center"
           style={{
-            background: accent ? 'rgba(232,255,0,0.12)' : 'rgba(255,255,255,0.07)',
-            border: `1px solid ${accent ? 'rgba(232,255,0,0.25)' : 'rgba(255,255,255,0.1)'}`,
+            width: 34,
+            height: 34,
+            borderRadius: '50%',
+            background: 'rgba(232,255,0,0.07)',
+            border: '1px solid rgba(232,255,0,0.2)',
+            color: 'rgba(232,255,0,0.65)',
+            transition: 'all 0.2s',
+            textDecoration: 'none',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = 'rgba(232,255,0,0.18)'
+            e.currentTarget.style.borderColor = 'rgba(232,255,0,0.5)'
+            e.currentTarget.style.color = 'var(--color-accent)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'rgba(232,255,0,0.07)'
+            e.currentTarget.style.borderColor = 'rgba(232,255,0,0.2)'
+            e.currentTarget.style.color = 'rgba(232,255,0,0.65)'
           }}
         >
-          {photoSrc ? (
-            <img
-              src={photoSrc}
-              alt={person.name}
-              className="w-full h-full object-cover object-top"
-              loading="lazy"
-              decoding="async"
-            />
-          ) : (
-            <span
-              className="font-display text-lg"
-              style={{ color: accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.6)' }}
-            >
-              {person.initial}
-            </span>
-          )}
-        </div>
-
-        <div>
-          <div
-            className="text-[9px] tracking-[0.2em] uppercase font-semibold mb-0.5"
-            style={{ color: accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.35)' }}
-          >
-            {person.role}
-          </div>
-          <div className="font-semibold text-sm leading-snug" style={{ color: 'var(--color-text)' }}>
-            {person.name}
-          </div>
-          <div className="text-[11px] mt-0.5 leading-snug" style={{ color: 'rgba(245,245,245,0.4)' }}>
-            {person.title}
-          </div>
-        </div>
-      </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+      )}
     </motion.div>
   )
 }
@@ -198,7 +251,7 @@ export default function TeamSection() {
         <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12" stagger={0.08} delayChildren={0.1}>
           {committee.chiefAdvisors.map((p) => (
             <StaggerItem key={p.name} variant="fadeUp">
-              <PersonCard person={p} />
+              <PersonCard person={p} accent />
             </StaggerItem>
           ))}
         </StaggerContainer>
@@ -214,7 +267,7 @@ export default function TeamSection() {
         <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-20" stagger={0.08} delayChildren={0.1}>
           {committee.facultyAdvisors.map((p) => (
             <StaggerItem key={p.name} variant="fadeUp">
-              <PersonCard person={p} />
+              <PersonCard person={p} accent />
             </StaggerItem>
           ))}
         </StaggerContainer>
