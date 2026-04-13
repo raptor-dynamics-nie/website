@@ -104,22 +104,51 @@ export default function AboutSection() {
             {/* NIE affiliation note */}
             <ScrollReveal variant="fadeUp" delay={0.25}>
               <div
-                className="mt-6 flex items-center gap-3 p-3 clip-corner"
+                className="mt-6 p-5 clip-corner"
                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
               >
-                <img
-                  src={`${import.meta.env.BASE_URL}nie-logo.svg`}
-                  alt="NIE University"
-                  className="w-9 h-9 object-contain flex-shrink-0"
-                  style={{ filter: 'brightness(3) saturate(1.2)', opacity: 0.85 }}
-                />
-                <div>
-                  <div className="text-xs font-semibold" style={{ color: 'rgba(245,245,245,0.7)' }}>
-                    The National Institute of Engineering (Autonomous Institution under VTU)
+                {/* Logo + name row */}
+                <div className="flex items-center gap-4 mb-4">
+                  <img
+                    src={`${import.meta.env.BASE_URL}nie-logo.svg`}
+                    alt="NIE University"
+                    className="w-16 h-16 object-contain flex-shrink-0"
+                    style={{ filter: 'brightness(3) saturate(1.2)', opacity: 0.9 }}
+                  />
+                  <div>
+                    <div className="text-sm font-semibold leading-snug" style={{ color: 'rgba(245,245,245,0.85)' }}>
+                      The National Institute of Engineering
+                    </div>
+                    <div className="text-[11px] mt-0.5" style={{ color: 'rgba(245,245,245,0.45)' }}>
+                      Autonomous Institution under VTU, Belagavi
+                    </div>
+                    <div className="text-[10px] tracking-widest uppercase mt-1" style={{ color: 'rgba(245,245,245,0.3)' }}>
+                      Manandavadi Road, Mysuru – 570 008
+                    </div>
                   </div>
-                  <div className="text-[10px] tracking-widest uppercase mt-0.5" style={{ color: 'rgba(245,245,245,0.35)' }}>
-                    Manandavadi Road, Mysuru – 570 008
-                  </div>
+                </div>
+
+                {/* College stat chips */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {[
+                    { label: 'Est.',        value: '1946'   },
+                    { label: 'NAAC Grade',  value: 'A+'     },
+                    { label: 'Affiliation', value: 'VTU'    },
+                    { label: 'Students',    value: '5000+'  },
+                  ].map(({ label, value }) => (
+                    <div
+                      key={label}
+                      className="flex flex-col items-center py-2 px-1 text-center rounded"
+                      style={{ background: 'rgba(232,255,0,0.04)', border: '1px solid rgba(232,255,0,0.08)' }}
+                    >
+                      <span className="font-display text-base leading-none" style={{ color: 'var(--color-accent)' }}>
+                        {value}
+                      </span>
+                      <span className="text-[9px] tracking-widest uppercase mt-1" style={{ color: 'rgba(245,245,245,0.4)' }}>
+                        {label}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </ScrollReveal>

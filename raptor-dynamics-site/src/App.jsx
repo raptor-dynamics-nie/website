@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
+import Lenis from 'lenis'
 import './index.css'
 import GlobalBackground from './components/GlobalBackground'
 import CustomCursor from './components/CustomCursor'
@@ -6,7 +7,6 @@ import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
 
 // Lazy-load all below-fold sections — they are NOT needed for initial paint
-const DroneAssembly  = lazy(() => import('./components/DroneAssemblySection'))
 const AboutSection   = lazy(() => import('./components/AboutSection'))
 const DomainsSection = lazy(() => import('./components/DomainsSection'))
 const EventsSection  = lazy(() => import('./components/EventsSection'))
@@ -21,6 +21,32 @@ function SectionFallback() {
 }
 
 export default function App() {
+  // ── Lenis smooth scroll ──────────────────────────────────────
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.4,          // scroll animation length in seconds
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo ease
+      smoothWheel: true,
+      syncTouch: false,
+    })
+
+    // Expose globally so Navbar can call lenis.scrollTo()
+    window.__lenis = lenis
+
+    // Tie into rAF
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+    const rafId = requestAnimationFrame(raf)
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      lenis.destroy()
+      window.__lenis = null
+    }
+  }, [])
+
   return (
     <div className="relative">
       {/* Global animated background — fixed behind all sections */}
@@ -36,11 +62,6 @@ export default function App() {
       <main>
         {/* 1. Hero — above fold, always eager */}
         <HeroSection />
-
-        {/* 2. Drone Build Cinematic */}
-        <Suspense fallback={<SectionFallback />}>
-          <DroneAssembly />
-        </Suspense>
 
         {/* 3–7. Below fold — lazy loaded */}
         <Suspense fallback={<SectionFallback />}>

@@ -22,22 +22,24 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Active section tracker via IntersectionObserver
+  // Active section tracker — scroll-position based (IntersectionObserver
+  // fails because sections are lazy-loaded and not in the DOM at mount)
   useEffect(() => {
-    const observers = []
-    navLinks.forEach(({ id }) => {
-      const el = document.getElementById(id)
-      if (!el) return
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(id)
-        },
-        { threshold: 0.25, rootMargin: '-80px 0px -30% 0px' }
-      )
-      obs.observe(el)
-      observers.push(obs)
-    })
-    return () => observers.forEach((o) => o.disconnect())
+    const OFFSET = 120  // px below the navbar to treat as "entered"
+
+    const onScroll = () => {
+      const y = window.scrollY + OFFSET
+      let current = ''
+      navLinks.forEach(({ id }) => {
+        const el = document.getElementById(id)
+        if (el && el.offsetTop <= y) current = id
+      })
+      setActiveSection(current)
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()  // run once on mount to set initial state
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   const menuVariants = {
@@ -112,31 +114,28 @@ export default function Navbar() {
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  className="relative text-xs font-semibold tracking-widest uppercase pb-1"
+                  className="relative text-xs font-semibold tracking-widest uppercase pb-1.5"
                   style={{ color: isActive ? '#f5f5f5' : 'rgba(245,245,245,0.6)' }}
                   whileHover={{ color: '#f5f5f5' }}
-                  onClick={() => setActiveSection(link.id)}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setActiveSection(link.id)
+                    const target = document.getElementById(link.id)
+                    if (target && window.__lenis) {
+                      window.__lenis.scrollTo(target, { offset: -80, duration: 1.4 })
+                    } else if (target) {
+                      target.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }}
                 >
                   {link.label}
-                  {/* Hover underline */}
+                  {/* Underline — scales in when active, scales out when not */}
                   <motion.span
-                    className="absolute bottom-0 left-0 h-px w-full origin-left"
-                    style={{ background: 'var(--color-accent)' }}
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.3 }}
+                    className="absolute bottom-0 left-0 h-[2px] w-full origin-left"
+                    style={{ background: 'var(--color-accent)', borderRadius: 2 }}
+                    animate={{ scaleX: isActive ? 1 : 0 }}
+                    transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                   />
-                  {/* Active section underline — persistent */}
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-active-underline"
-                      className="absolute bottom-0 left-0 h-[2px] w-full"
-                      style={{ background: 'var(--color-accent)', borderRadius: 2 }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    />
-                  )}
                 </motion.a>
               )
             })}
@@ -157,7 +156,7 @@ export default function Navbar() {
               <img
                 src={`${import.meta.env.BASE_URL}nie-logo.svg`}
                 alt="NIE University"
-                className="w-7 h-7 object-contain"
+                className="w-10 h-10 object-contain"
                 style={{ filter: 'brightness(3) saturate(1.2)' }}
               />
               <span className="text-[9px] tracking-widest uppercase font-semibold" style={{ color: 'rgba(178,222,247,0.85)' }}>
@@ -226,7 +225,19 @@ export default function Navbar() {
                   initial="closed"
                   animate="open"
                   exit="closed"
-                  onClick={() => { setMenuOpen(false); setActiveSection(link.id) }}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setMenuOpen(false)
+                    setActiveSection(link.id)
+                    setTimeout(() => {
+                      const target = document.getElementById(link.id)
+                      if (target && window.__lenis) {
+                        window.__lenis.scrollTo(target, { offset: -80, duration: 1.4 })
+                      } else if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' })
+                      }
+                    }, 350) // wait for menu close animation
+                  }}
                   className="font-display text-5xl tracking-widest leading-none border-b pb-4"
                   style={{
                     color: activeSection === link.id ? 'var(--color-accent)' : 'var(--color-text)',
