@@ -6,6 +6,7 @@ import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
 
 // Lazy-load all below-fold sections — they are NOT needed for initial paint
+const DroneAssembly  = lazy(() => import('./components/DroneAssemblySection'))
 const AboutSection   = lazy(() => import('./components/AboutSection'))
 const DomainsSection = lazy(() => import('./components/DomainsSection'))
 const EventsSection  = lazy(() => import('./components/EventsSection'))
@@ -36,7 +37,12 @@ export default function App() {
         {/* 1. Hero — above fold, always eager */}
         <HeroSection />
 
-        {/* 2–6. Below fold — lazy loaded */}
+        {/* 2. Drone Build Cinematic */}
+        <Suspense fallback={<SectionFallback />}>
+          <DroneAssembly />
+        </Suspense>
+
+        {/* 3–7. Below fold — lazy loaded */}
         <Suspense fallback={<SectionFallback />}>
           <AboutSection />
         </Suspense>
