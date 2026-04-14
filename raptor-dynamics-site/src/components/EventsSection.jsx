@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
+import ScrollReveal, { StaggerContainer, StaggerItem, HoverRollText } from './ScrollReveal'
 
 // ── Add future events here ──────────────────────────────────────
 const events = [
@@ -216,9 +216,9 @@ export default function EventsSection() {
               className="font-display leading-[0.9] tracking-tight"
               style={{ fontSize: 'clamp(3rem,8vw,7rem)', color: 'var(--color-text)' }}
             >
-              EVENTS &amp;<br />
+              <HoverRollText text="EVENTS &" /><br />
               <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.25)', WebkitTextFillColor: 'transparent' }}>
-                MILESTONES
+                <HoverRollText text="MILESTONES" />
               </span>
             </h2>
           </ScrollReveal>

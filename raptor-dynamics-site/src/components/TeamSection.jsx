@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
+import ScrollReveal, { StaggerContainer, StaggerItem, HoverRollText } from './ScrollReveal'
 
 const committee = {
   patrons: [
@@ -183,9 +183,9 @@ export default function TeamSection() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
           <ScrollReveal variant="fadeUp" delay={0.1}>
             <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.92] tracking-tight" style={{ color: 'var(--color-text)' }}>
-              THE PEOPLE<br />
+              <HoverRollText text="THE PEOPLE" /><br />
               <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.2)', WebkitTextFillColor: 'transparent' }}>
-                BEHIND IT
+                <HoverRollText text="BEHIND IT" />
               </span>
             </h2>
           </ScrollReveal>

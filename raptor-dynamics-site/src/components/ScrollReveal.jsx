@@ -108,3 +108,42 @@ export function StaggerItem({ children, className = '', variant = 'fadeUp', dura
     </motion.div>
   )
 }
+
+/**
+ * HoverRollText — Premium staggered text rolling effect on hover
+ */
+export function HoverRollText({ text, className = '' }) {
+  const words = text.split(' ')
+  return (
+    <motion.span
+      className={`inline-flex flex-wrap cursor-crosshair select-none ${className}`}
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+    >
+      {words.map((word, i) => (
+        <span key={i} className="relative inline-flex">
+          <span className="relative overflow-hidden inline-flex">
+            <motion.span
+              className="inline-block"
+              variants={{ rest: { y: 0 }, hover: { y: '-100%' } }}
+              transition={{ type: 'spring', stiffness: 500, damping: 28, delay: i * 0.035 }}
+            >
+              {word}
+            </motion.span>
+            <motion.span
+              className="absolute left-0 top-full inline-block"
+              style={{ color: 'var(--color-accent)' }}
+              variants={{ rest: { y: 0 }, hover: { y: '-100%' } }}
+              transition={{ type: 'spring', stiffness: 500, damping: 28, delay: i * 0.035 }}
+              aria-hidden
+            >
+              {word}
+            </motion.span>
+          </span>
+          {i < words.length - 1 && <span className="inline-block">&nbsp;</span>}
+        </span>
+      ))}
+    </motion.span>
+  )
+}

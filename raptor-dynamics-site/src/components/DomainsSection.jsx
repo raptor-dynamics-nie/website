@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
+import ScrollReveal, { StaggerContainer, StaggerItem, HoverRollText } from './ScrollReveal'
 
 // Real technical domains from the PDF
 const domains = [
@@ -258,9 +258,9 @@ export default function DomainsSection() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
           <ScrollReveal variant="fadeUp" delay={0.1}>
             <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.92] tracking-tight" style={{ color: 'var(--color-text)' }}>
-              WHAT WE<br />
+              <HoverRollText text="WHAT WE" /><br />
               <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.2)', WebkitTextFillColor: 'transparent' }}>
-                MASTER
+                <HoverRollText text="MASTER" />
               </span>
             </h2>
           </ScrollReveal>
@@ -301,9 +301,9 @@ export default function DomainsSection() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
           <ScrollReveal variant="fadeUp" delay={0.1}>
             <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.92] tracking-tight" style={{ color: 'var(--color-text)' }}>
-              DRONES FOR<br />
+              <HoverRollText text="DRONES FOR" /><br />
               <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.2)', WebkitTextFillColor: 'transparent' }}>
-                REAL IMPACT
+                <HoverRollText text="REAL IMPACT" />
               </span>
             </h2>
           </ScrollReveal>
