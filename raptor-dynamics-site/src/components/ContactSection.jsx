@@ -135,7 +135,7 @@ export default function ContactSection() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <ScrollReveal variant="fadeUp" delay={0.1}>
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.35)' }}>Name *</label>
+                      <label htmlFor="contact-name" className="text-[10px] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.35)' }}>Name *</label>
                       <input
                         id="contact-name"
                         type="text"
@@ -153,7 +153,7 @@ export default function ContactSection() {
 
                   <ScrollReveal variant="fadeUp" delay={0.15}>
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.35)' }}>Email *</label>
+                      <label htmlFor="contact-email" className="text-[10px] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.35)' }}>Email *</label>
                       <input
                         id="contact-email"
                         type="email"
@@ -172,7 +172,7 @@ export default function ContactSection() {
 
                 <ScrollReveal variant="fadeUp" delay={0.2}>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.35)' }}>Area of Interest</label>
+                    <label htmlFor="contact-interest" className="text-[10px] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.35)' }}>Area of Interest</label>
                     <select
                       id="contact-interest"
                       value={formData.interest}
@@ -195,7 +195,7 @@ export default function ContactSection() {
 
                 <ScrollReveal variant="fadeUp" delay={0.25}>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.35)' }}>Message *</label>
+                    <label htmlFor="contact-message" className="text-[10px] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.35)' }}>Message *</label>
                     <textarea
                       id="contact-message"
                       required

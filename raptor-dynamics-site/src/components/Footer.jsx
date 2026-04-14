@@ -196,7 +196,7 @@ export default function Footer() {
 
         {/* Bottom row */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <p className="text-xs" style={{ color: 'rgba(245,245,245,0.25)' }}>
+          <p className="text-xs" style={{ color: 'rgba(245,245,245,0.5)' }}>
             © 2026 Raptor Dynamics — The National Institute of Engineering, Mysuru. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
@@ -204,7 +204,7 @@ export default function Footer() {
               className="w-1.5 h-1.5 rounded-full"
               style={{ background: 'var(--color-accent)', animation: 'pulse-dot 2s ease-in-out infinite' }}
             />
-            <span className="text-xs tracking-widest uppercase" style={{ color: 'rgba(245,245,245,0.25)' }}>
+            <span className="text-xs tracking-widest uppercase" style={{ color: 'rgba(245,245,245,0.5)' }}>
               Club Active · Recruiting Members
             </span>
           </div>

@@ -119,9 +119,9 @@ function PersonCard({ person, accent = false }) {
         </div>
 
         {/* Text */}
-        <h4 className="font-display text-[22px] tracking-wide text-center" style={{ color: 'var(--color-text)' }}>
+        <h3 className="font-display text-[22px] tracking-wide text-center" style={{ color: 'var(--color-text)' }}>
            {person.name}
-        </h4>
+        </h3>
         <div className="w-6 h-px my-3 transition-all duration-300 group-hover:w-12" style={{ background: accent ? 'var(--color-accent)' : 'rgba(255,255,255,0.3)' }} />
         <p className="text-[11px] uppercase tracking-widest text-center font-bold" style={{ color: accent ? 'rgba(232,255,0,0.8)' : 'rgba(245,245,245,0.5)' }}>
            {person.title}
@@ -133,6 +133,7 @@ function PersonCard({ person, accent = false }) {
            href={person.linkedin}
            target="_blank"
            rel="noopener noreferrer"
+           aria-label={`LinkedIn profile for ${person.name}`}
            className="mt-auto mx-auto flex items-center justify-center w-8 h-8 rounded-full border transition-all duration-200"
            style={{
              background: accent ? 'rgba(232,255,0,0.05)' : 'rgba(255,255,255,0.03)',

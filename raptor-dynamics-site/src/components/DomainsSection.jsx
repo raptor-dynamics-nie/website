@@ -224,9 +224,9 @@ function AppCard({ app, index }) {
           {app.tag}
         </span>
       </div>
-      <h4 className="font-display text-xl tracking-wide mb-2" style={{ color: 'var(--color-text)' }}>
+      <h3 className="font-display text-xl tracking-wide mb-2" style={{ color: 'var(--color-text)' }}>
         {app.title}
-      </h4>
+      </h3>
       <p className="text-sm leading-relaxed" style={{ color: 'rgba(245,245,245,0.45)' }}>
         {app.desc}
       </p>
