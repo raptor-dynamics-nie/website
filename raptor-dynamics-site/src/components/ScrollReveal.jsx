@@ -110,40 +110,18 @@ export function StaggerItem({ children, className = '', variant = 'fadeUp', dura
 }
 
 /**
- * HoverRollText — Premium staggered text rolling effect on hover
+ * HoverRollText — Renamed conceptually, but applies a unified Enlarge + Pop Up effect 
+ * on hover as requested.
  */
 export function HoverRollText({ text, className = '' }) {
-  const words = text.split(' ')
   return (
     <motion.span
-      className={`inline-flex flex-wrap cursor-crosshair select-none ${className}`}
-      initial="rest"
-      whileHover="hover"
-      animate="rest"
+      className={`inline-block cursor-crosshair select-none ${className}`}
+      whileHover={{ y: -10, scale: 1.08 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+      style={{ transformOrigin: 'center bottom' }}
     >
-      {words.map((word, i) => (
-        <span key={i} className="relative inline-flex">
-          <span className="relative overflow-hidden inline-flex">
-            <motion.span
-              className="inline-block"
-              variants={{ rest: { y: 0 }, hover: { y: '-100%' } }}
-              transition={{ type: 'spring', stiffness: 500, damping: 28, delay: i * 0.035 }}
-            >
-              {word}
-            </motion.span>
-            <motion.span
-              className="absolute left-0 top-full inline-block"
-              style={{ color: 'var(--color-accent)' }}
-              variants={{ rest: { y: 0 }, hover: { y: '-100%' } }}
-              transition={{ type: 'spring', stiffness: 500, damping: 28, delay: i * 0.035 }}
-              aria-hidden
-            >
-              {word}
-            </motion.span>
-          </span>
-          {i < words.length - 1 && <span className="inline-block">&nbsp;</span>}
-        </span>
-      ))}
+      {text}
     </motion.span>
   )
 }

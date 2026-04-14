@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import ScrollReveal, { StaggerContainer, StaggerItem, HoverRollText } from './ScrollReveal'
+import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
 const pillars = [
   { label: 'UAV Systems',     value: 'Full-Stack', sub: 'Fabrication to Flight'         },
@@ -76,12 +76,17 @@ export default function AboutSection() {
             </ScrollReveal>
 
             <ScrollReveal variant="fadeUp" delay={0.1}>
-              <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.92] tracking-tight mb-6" style={{ color: 'var(--color-text)' }}>
-                <HoverRollText text="STUDENT-DRIVEN" /><br />
+              <motion.h2 
+                className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.92] tracking-tight mb-6 inline-block cursor-crosshair origin-left" 
+                style={{ color: 'var(--color-text)' }}
+                whileHover={{ y: -6, scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+              >
+                STUDENT-DRIVEN<br />
                 <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.25)', WebkitTextFillColor: 'transparent' }}>
-                  <HoverRollText text="UAV INNOVATION" />
+                  UAV INNOVATION
                 </span>
-              </h2>
+              </motion.h2>
             </ScrollReveal>
 
             <ScrollReveal variant="fadeUp" delay={0.15}>

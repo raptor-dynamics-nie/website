@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import ScrollReveal, { StaggerContainer, StaggerItem, HoverRollText } from './ScrollReveal'
+import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
 // ── Add future events here ──────────────────────────────────────
 const events = [
@@ -212,15 +212,17 @@ export default function EventsSection() {
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
           <ScrollReveal variant="fadeUp" delay={0.1}>
-            <h2
-              className="font-display leading-[0.9] tracking-tight"
+            <motion.h2
+              className="font-display leading-[0.9] tracking-tight inline-block cursor-crosshair origin-left"
               style={{ fontSize: 'clamp(3rem,8vw,7rem)', color: 'var(--color-text)' }}
+              whileHover={{ y: -6, scale: 1.05 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
             >
-              <HoverRollText text="EVENTS &" /><br />
+              EVENTS &amp;<br />
               <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.25)', WebkitTextFillColor: 'transparent' }}>
-                <HoverRollText text="MILESTONES" />
+                MILESTONES
               </span>
-            </h2>
+            </motion.h2>
           </ScrollReveal>
           <ScrollReveal variant="fadeUp" delay={0.2} className="max-w-xs">
             <p className="text-sm leading-relaxed" style={{ color: 'rgba(245,245,245,0.45)' }}>

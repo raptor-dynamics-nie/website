@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import ScrollReveal, { StaggerContainer, StaggerItem, HoverRollText } from './ScrollReveal'
+import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
 // VISION, MISSION, OBJECTIVES — from PDF, rewritten for web
 const missionPoints = [
@@ -166,12 +166,17 @@ export default function MissionSection() {
 
       <div className="grid lg:grid-cols-2 gap-12 items-end mb-16">
         <ScrollReveal variant="fadeUp" delay={0.1}>
-          <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.92] tracking-tight" style={{ color: 'var(--color-text)' }}>
-            <HoverRollText text="HOW WE" /><br />
+          <motion.h2 
+            className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.92] tracking-tight inline-block cursor-crosshair origin-left" 
+            style={{ color: 'var(--color-text)' }}
+            whileHover={{ y: -6, scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+          >
+            HOW WE<br />
             <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.25)', WebkitTextFillColor: 'transparent' }}>
-              <HoverRollText text="GET THERE" />
+              GET THERE
             </span>
-          </h2>
+          </motion.h2>
         </ScrollReveal>
 
         <ScrollReveal variant="fadeUp" delay={0.2}>
@@ -203,12 +208,17 @@ export default function MissionSection() {
         </ScrollReveal>
 
         <ScrollReveal variant="fadeUp" delay={0.1}>
-          <h3 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[0.92] tracking-tight mb-12" style={{ color: 'var(--color-text)' }}>
-            <HoverRollText text="WHAT WE SET" /><br />
+          <motion.h3 
+            className="font-display text-[clamp(2rem,5vw,4rem)] leading-[0.92] tracking-tight mb-12 inline-block cursor-crosshair origin-left" 
+            style={{ color: 'var(--color-text)' }}
+            whileHover={{ y: -6, scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+          >
+            WHAT WE SET<br />
             <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.25)', WebkitTextFillColor: 'transparent' }}>
-              <HoverRollText text="OUT TO DO" />
+              OUT TO DO
             </span>
-          </h3>
+          </motion.h3>
         </ScrollReveal>
 
         <StaggerContainer className="grid sm:grid-cols-2 gap-3" stagger={0.07} delayChildren={0.1}>
