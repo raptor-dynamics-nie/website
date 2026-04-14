@@ -91,10 +91,10 @@ export default function Navbar() {
           {/* Left: Club Logo + Name */}
           <motion.a href="#hero" className="flex items-center gap-3 group" whileHover={{ scale: 1.02 }}>
             <img
-              src={`${import.meta.env.BASE_URL}raptor-logo.png`}
+              src={`${import.meta.env.BASE_URL}white-logo.png`}
               alt="Raptor Dynamics Logo"
-              className="w-16 h-16 object-contain flex-shrink-0"
-              style={{ filter: 'brightness(0) invert(1)', opacity: 0.95 }}
+              className="w-20 h-20 object-contain flex-shrink-0"
+              style={{ opacity: 0.95 }}
             />
             <div className="hidden sm:flex flex-col leading-none">
               <span className="font-display text-base tracking-widest" style={{ color: 'var(--color-text)' }}>

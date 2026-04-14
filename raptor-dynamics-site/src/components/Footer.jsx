@@ -90,10 +90,10 @@ export default function Footer() {
               {/* Logos */}
               <div className="flex items-center gap-4 mb-5">
                 <img
-                  src={`${import.meta.env.BASE_URL}raptor-logo.png`}
+                  src={`${import.meta.env.BASE_URL}white-logo.png`}
                   alt="Raptor Dynamics"
-                  className="w-14 h-14 object-contain"
-                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.92 }}
+                  className="w-16 h-16 object-contain"
+                  style={{ opacity: 0.92 }}
                 />
                 <div>
                   <div className="font-display text-xl tracking-widest" style={{ color: 'var(--color-text)' }}>
