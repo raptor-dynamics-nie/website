@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
 // Real technical domains from the PDF
@@ -10,6 +11,11 @@ const domains = [
     desc: 'Mastering lift, drag, thrust, and stability. Members study and simulate airflow dynamics to optimize UAV frames for efficient, stable flight across diverse conditions.',
     icon: '◈',
     accent: true,
+    details: {
+      focus: ['Computational Fluid Dynamics (CFD)', 'Airfoil & Propeller Design', 'Structural Analysis'],
+      tools: ['ANSYS Fluent', 'SolidWorks', 'OpenVSP'],
+      mission: 'Designing high-endurance and custom-payload airframes.'
+    }
   },
   {
     id: '02',
@@ -17,7 +23,12 @@ const domains = [
     subtitle: 'Avionics & Control',
     desc: 'Designing and tuning autonomous flight controllers — from PID tuning to GPS-based waypoint navigation and real-time telemetry feedback loops.',
     icon: '◎',
-    accent: false,
+    accent: true,
+    details: {
+      focus: ['PID Tuning & Simulation', 'Sensor Calibration (IMU, GPS)', 'Waypoint Navigation'],
+      tools: ['Mission Planner', 'QGroundControl', 'MATLAB/Simulink'],
+      mission: 'Ensuring stable, reliable, and precise autonomous flight control.'
+    }
   },
   {
     id: '03',
@@ -25,7 +36,12 @@ const domains = [
     subtitle: 'Hardware & Firmware',
     desc: 'Programming microcontrollers and SBCs for onboard processing. From sensor fusion to motor ESC programming — the nervous system of every drone we build.',
     icon: '⊞',
-    accent: false,
+    accent: true,
+    details: {
+      focus: ['Firmware Development', 'Sensor Fusion', 'Custom PCB Design', 'ESC Protocoling'],
+      tools: ['C/C++', 'KiCad', 'ArduPilot/PX4', 'ROS'],
+      mission: 'Building the reliable hardware backbone for complex aerial robotics.'
+    }
   },
   {
     id: '04',
@@ -33,7 +49,12 @@ const domains = [
     subtitle: 'Intelligent Systems',
     desc: 'Integrating machine learning for autonomous object detection, terrain mapping, and intelligent decision-making — pushing drones beyond remote control into true autonomy.',
     icon: '◆',
-    accent: false,
+    accent: true,
+    details: {
+      focus: ['Object Detection', 'SLAM', 'Path Planning & Obstacle Avoidance'],
+      tools: ['Python', 'OpenCV', 'PyTorch/TensorFlow', 'ROS2'],
+      mission: 'Transforming drones from manual tools to intelligent agents.'
+    }
   },
 ]
 
@@ -43,7 +64,7 @@ const applications = [
     code: 'APP-01',
     title: 'Precision Agriculture',
     desc: 'Crop health monitoring and field mapping via multispectral imaging. Aerial spraying systems for targeted pesticide delivery.',
-    tag: 'FIELD DEPLOYED',
+    tag: 'ACTIVE',
   },
   {
     code: 'APP-02',
@@ -55,20 +76,23 @@ const applications = [
     code: 'APP-03',
     title: 'Topographic Mapping',
     desc: 'High-resolution 3D terrain reconstruction using photogrammetry and LiDAR. Replacing weeks of manual survey with hours of autonomous flight.',
-    tag: 'RESEARCH',
+    tag: 'ACTIVE',
   },
   {
     code: 'APP-04',
     title: 'Disaster Management',
     desc: 'Search and rescue support using thermal imaging, delivery of emergency supplies to inaccessible zones, and post-disaster damage assessment.',
-    tag: 'CRITICAL MISSION',
+    tag: 'ACTIVE',
   },
 ]
 
 function DomainCard({ domain, index }) {
+  const [expanded, setExpanded] = useState(false)
+
   return (
     <motion.div
-      className="relative group overflow-hidden clip-corner"
+      layout="position"
+      className="relative group overflow-hidden clip-corner flex flex-col"
       style={{
         background: domain.accent ? 'rgba(232,255,0,0.06)' : 'rgba(255,255,255,0.04)',
         border: `1px solid ${domain.accent ? 'rgba(232,255,0,0.2)' : 'rgba(255,255,255,0.1)'}`,
@@ -97,21 +121,22 @@ function DomainCard({ domain, index }) {
         <h3 className="font-display text-2xl md:text-3xl tracking-wide mb-3" style={{ color: 'var(--color-text)' }}>
           {domain.title}
         </h3>
-        <p className="text-sm leading-relaxed" style={{ color: 'rgba(245,245,245,0.5)' }}>
+        <p className="text-sm leading-relaxed" style={{ color: 'rgba(245,245,245,0.5)', minHeight: '6rem' }}>
           {domain.desc}
         </p>
 
-        <div className="mt-6 flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between pt-4">
           <motion.button
+            onClick={() => setExpanded(!expanded)}
             className="flex items-center gap-2 text-xs font-semibold tracking-widest uppercase"
-            style={{ color: domain.accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.5)' }}
-            whileHover={{ gap: 8 }}
+            style={{ color: domain.accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.8)' }}
+            whileHover={{ gap: expanded ? 4 : 8 }}
             transition={{ duration: 0.2 }}
           >
-            Explore Domain →
+            {expanded ? 'Hide Details ↑' : 'Explore Domain →'}
           </motion.button>
           <motion.div
-            className="w-5 h-5"
+            className="w-5 h-5 flex-shrink-0"
             style={{
               borderRight: `1px solid ${domain.accent ? 'rgba(232,255,0,0.3)' : 'rgba(255,255,255,0.1)'}`,
               borderBottom: `1px solid ${domain.accent ? 'rgba(232,255,0,0.3)' : 'rgba(255,255,255,0.1)'}`,
@@ -121,6 +146,46 @@ function DomainCard({ domain, index }) {
           />
         </div>
       </div>
+
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="overflow-hidden"
+            style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(0,0,0,0.2)' }}
+          >
+            <div className="p-5 pt-4 space-y-4">
+              <div>
+                <div className="text-[9px] tracking-widest uppercase font-bold mb-1.5" style={{ color: 'rgba(245,245,245,0.3)' }}>Key Focus</div>
+                <div className="text-xs leading-relaxed" style={{ color: 'rgba(245,245,245,0.6)' }}>
+                  {domain.details.focus.join(' • ')}
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-[9px] tracking-widest uppercase font-bold mb-1.5" style={{ color: 'rgba(245,245,245,0.3)' }}>Tools & Software</div>
+                <div className="flex flex-wrap gap-2">
+                  {domain.details.tools.map(tool => (
+                    <span key={tool} className="px-2 py-0.5 text-[10px] rounded-sm" style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(245,245,245,0.7)' }}>
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="text-[9px] tracking-widest uppercase font-bold mb-1.5" style={{ color: 'rgba(245,245,245,0.3)' }}>Objective</div>
+                <div className="text-xs font-medium leading-relaxed italic" style={{ color: domain.accent ? 'var(--color-accent)' : '#fff', opacity: 0.8 }}>
+                  "{domain.details.mission}"
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hover glow sweep */}
       <motion.div
@@ -137,7 +202,7 @@ function DomainCard({ domain, index }) {
 function AppCard({ app, index }) {
   return (
     <motion.div
-      className="relative p-5 clip-corner group"
+      className="relative p-5 clip-corner group flex flex-col h-full"
       style={{
         background: 'rgba(255,255,255,0.04)',
         border: '1px solid rgba(255,255,255,0.1)',
@@ -208,7 +273,7 @@ export default function DomainsSection() {
           </ScrollReveal>
         </div>
 
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" stagger={0.1} delayChildren={0.2}>
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start" stagger={0.1} delayChildren={0.2}>
           {domains.map((domain, i) => (
             <StaggerItem key={domain.id} variant="fadeUp">
               <DomainCard domain={domain} index={i} />
@@ -253,7 +318,7 @@ export default function DomainsSection() {
 
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" stagger={0.1} delayChildren={0.2}>
           {applications.map((app, i) => (
-            <StaggerItem key={app.code} variant="fadeUp">
+            <StaggerItem key={app.code} variant="fadeUp" className="h-full">
               <AppCard app={app} index={i} />
             </StaggerItem>
           ))}

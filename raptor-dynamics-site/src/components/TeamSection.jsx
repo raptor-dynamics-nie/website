@@ -79,109 +79,81 @@ function PersonCard({ person, accent = false }) {
 
   return (
     <motion.div
-      className="relative flex flex-col items-center p-6 clip-corner"
+      className="relative flex flex-col p-6 clip-corner group overflow-hidden"
       style={{
-        background: accent ? 'rgba(232,255,0,0.06)' : 'rgba(255,255,255,0.04)',
-        border: `1px solid ${accent ? 'rgba(232,255,0,0.18)' : 'rgba(255,255,255,0.1)'}`,
-        backdropFilter: 'blur(20px) saturate(160%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(160%)',
-        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 24px rgba(0,0,0,0.2)',
+        background: accent ? 'rgba(232,255,0,0.03)' : 'rgba(255,255,255,0.02)',
+        border: `1px solid ${accent ? 'rgba(232,255,0,0.1)' : 'rgba(255,255,255,0.05)'}`,
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
       }}
       whileHover={{
-        y: -6,
-        borderColor: accent ? 'rgba(232,255,0,0.4)' : 'rgba(255,255,255,0.2)',
-        boxShadow: '0 16px 40px rgba(0,0,0,0.35)',
+        y: -4,
+        background: accent ? 'rgba(232,255,0,0.06)' : 'rgba(255,255,255,0.04)',
+        borderColor: accent ? 'rgba(232,255,0,0.3)' : 'rgba(255,255,255,0.15)',
       }}
-      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+      transition={{ duration: 0.3 }}
     >
-      {/* Circular photo */}
-      <div
-        className="w-24 h-24 mb-4 overflow-hidden flex items-center justify-center flex-shrink-0"
-        style={{
-          borderRadius: '50%',
-          border: `2px solid ${accent ? 'rgba(232,255,0,0.35)' : 'rgba(255,255,255,0.12)'}`,
-          background: accent ? 'rgba(232,255,0,0.08)' : 'rgba(255,255,255,0.06)',
-        }}
-      >
-        {photoSrc ? (
-          <img
-            src={photoSrc}
-            alt={person.name}
-            className="w-full h-full object-cover object-top"
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <span
-            className="font-display text-2xl"
-            style={{ color: accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.5)' }}
-          >
-            {person.initial}
-          </span>
-        )}
+      {/* Tactical Top Accent Line */}
+      <div 
+        className="absolute top-0 left-6 right-6 h-[2px] transition-all duration-300 group-hover:scale-105" 
+        style={{ background: accent ? 'var(--color-accent)' : 'rgba(255,255,255,0.3)', transformOrigin: 'center' }} 
+      />
+
+      <div className="flex flex-col items-center mb-4 mt-2">
+        {/* Tactical Profile Frame */}
+        <div className="w-32 h-32 relative mb-6">
+           {/* Decorative corner brackets */}
+           <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 transition-all duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1" style={{ borderColor: accent ? 'rgba(232,255,0,0.4)' : 'rgba(255,255,255,0.3)' }} />
+           <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 transition-all duration-300 group-hover:translate-x-1 group-hover:translate-y-1" style={{ borderColor: accent ? 'rgba(232,255,0,0.4)' : 'rgba(255,255,255,0.3)' }} />
+           
+           {/* Content Box */}
+           <div className="w-full h-full clip-corner bg-zinc-900 overflow-hidden relative" style={{ border: `1px solid ${accent ? 'rgba(232,255,0,0.15)' : 'rgba(255,255,255,0.1)'}` }}>
+              {photoSrc ? (
+                 <img src={photoSrc} alt={person.name} loading="lazy" decoding="async" className="w-full h-full object-cover object-top transition-all duration-500" />
+              ) : (
+                <span className="absolute inset-0 flex items-center justify-center font-display text-4xl" style={{ color: accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.7)' }}>
+                  {person.initial}
+                </span>
+              )}
+           </div>
+        </div>
+
+        {/* Text */}
+        <h4 className="font-display text-[22px] tracking-wide text-center" style={{ color: 'var(--color-text)' }}>
+           {person.name}
+        </h4>
+        <div className="w-6 h-px my-3 transition-all duration-300 group-hover:w-12" style={{ background: accent ? 'var(--color-accent)' : 'rgba(255,255,255,0.3)' }} />
+        <p className="text-[11px] uppercase tracking-widest text-center font-bold" style={{ color: accent ? 'rgba(232,255,0,0.8)' : 'rgba(245,245,245,0.5)' }}>
+           {person.title}
+        </p>
       </div>
 
-      {/* Name */}
-      <div
-        className="font-semibold text-sm text-center leading-snug mb-2"
-        style={{ color: 'var(--color-text)' }}
-      >
-        {person.name}
-      </div>
-
-      {/* Role pill */}
-      <div
-        className="px-3 py-0.5 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full"
-        style={{
-          background: accent ? 'rgba(232,255,0,0.12)' : 'rgba(255,255,255,0.07)',
-          color: accent ? 'var(--color-accent)' : 'rgba(245,245,245,0.5)',
-          border: `1px solid ${accent ? 'rgba(232,255,0,0.25)' : 'rgba(255,255,255,0.1)'}`,
-        }}
-      >
-        {person.role}
-      </div>
-
-      {/* Department */}
-      <div
-        className="text-[10px] mt-2 text-center leading-snug"
-        style={{ color: 'rgba(245,245,245,0.35)' }}
-      >
-        {person.title}
-      </div>
-
-      {/* LinkedIn icon button */}
       {person.linkedin && (
-        <a
-          href={person.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${person.name} on LinkedIn`}
-          className="mt-4 flex items-center justify-center"
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: '50%',
-            background: 'rgba(232,255,0,0.07)',
-            border: '1px solid rgba(232,255,0,0.2)',
-            color: 'rgba(232,255,0,0.65)',
-            transition: 'all 0.2s',
-            textDecoration: 'none',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.background = 'rgba(232,255,0,0.18)'
-            e.currentTarget.style.borderColor = 'rgba(232,255,0,0.5)'
-            e.currentTarget.style.color = 'var(--color-accent)'
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.background = 'rgba(232,255,0,0.07)'
-            e.currentTarget.style.borderColor = 'rgba(232,255,0,0.2)'
-            e.currentTarget.style.color = 'rgba(232,255,0,0.65)'
-          }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-          </svg>
-        </a>
+         <a
+           href={person.linkedin}
+           target="_blank"
+           rel="noopener noreferrer"
+           className="mt-auto mx-auto flex items-center justify-center w-8 h-8 rounded-full border transition-all duration-200"
+           style={{
+             background: accent ? 'rgba(232,255,0,0.05)' : 'rgba(255,255,255,0.03)',
+             borderColor: accent ? 'rgba(232,255,0,0.2)' : 'rgba(255,255,255,0.1)',
+             color: accent ? 'rgba(232,255,0,0.6)' : 'rgba(245,245,245,0.5)',
+           }}
+           onMouseEnter={e => {
+             e.currentTarget.style.background = accent ? 'rgba(232,255,0,0.15)' : 'rgba(255,255,255,0.1)'
+             e.currentTarget.style.borderColor = accent ? 'rgba(232,255,0,0.5)' : 'rgba(255,255,255,0.3)'
+             e.currentTarget.style.color = accent ? 'var(--color-accent)' : '#fff'
+           }}
+           onMouseLeave={e => {
+             e.currentTarget.style.background = accent ? 'rgba(232,255,0,0.05)' : 'rgba(255,255,255,0.03)'
+             e.currentTarget.style.borderColor = accent ? 'rgba(232,255,0,0.2)' : 'rgba(255,255,255,0.1)'
+             e.currentTarget.style.color = accent ? 'rgba(232,255,0,0.6)' : 'rgba(245,245,245,0.5)'
+           }}
+         >
+           <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+           </svg>
+         </a>
       )}
     </motion.div>
   )
@@ -251,7 +223,7 @@ export default function TeamSection() {
         <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12" stagger={0.08} delayChildren={0.1}>
           {committee.chiefAdvisors.map((p) => (
             <StaggerItem key={p.name} variant="fadeUp">
-              <PersonCard person={p} accent />
+              <PersonCard person={p} />
             </StaggerItem>
           ))}
         </StaggerContainer>
@@ -267,7 +239,7 @@ export default function TeamSection() {
         <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-20" stagger={0.08} delayChildren={0.1}>
           {committee.facultyAdvisors.map((p) => (
             <StaggerItem key={p.name} variant="fadeUp">
-              <PersonCard person={p} accent />
+              <PersonCard person={p} />
             </StaggerItem>
           ))}
         </StaggerContainer>

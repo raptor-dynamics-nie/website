@@ -5,6 +5,7 @@ import GlobalBackground from './components/GlobalBackground'
 import CustomCursor from './components/CustomCursor'
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
+import SkeletonSection from './components/SkeletonSection'
 
 // Lazy-load all below-fold sections — they are NOT needed for initial paint
 const AboutSection   = lazy(() => import('./components/AboutSection'))
@@ -15,9 +16,9 @@ const TeamSection    = lazy(() => import('./components/TeamSection'))
 const ContactSection = lazy(() => import('./components/ContactSection'))
 const Footer         = lazy(() => import('./components/Footer'))
 
-// Minimal fallback: invisible placeholder preserving layout height
+// Skeleton fallback shown while lazy sections load
 function SectionFallback() {
-  return <div style={{ minHeight: '100vh' }} aria-hidden="true" />
+  return <SkeletonSection />
 }
 
 export default function App() {

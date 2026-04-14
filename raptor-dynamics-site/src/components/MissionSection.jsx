@@ -40,7 +40,7 @@ const objectives = [
 function MissionCard({ item, index }) {
   return (
     <motion.div
-      className="relative flex flex-col gap-4 p-6 border-l group"
+      className="relative flex flex-col gap-4 p-6 border-l group h-full"
       style={{ borderColor: 'rgba(255,255,255,0.08)' }}
       whileHover={{ borderColor: 'rgba(232,255,0,0.4)' }}
       transition={{ duration: 0.25 }}
@@ -185,7 +185,7 @@ export default function MissionSection() {
       {/* Mission cards grid */}
       <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0" stagger={0.1} delayChildren={0.15}>
         {missionPoints.map((item, i) => (
-          <StaggerItem key={item.title} variant="fadeUp">
+          <StaggerItem key={item.title} variant="fadeUp" className="h-full">
             <MissionCard item={item} index={i} />
           </StaggerItem>
         ))}
