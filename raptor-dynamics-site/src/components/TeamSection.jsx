@@ -51,7 +51,7 @@ const committee = {
     },
   ],
   studentRoles: [
-    { members: ['Diksha Pandey'], role: 'Student President', desc: 'Overall club leadership and external representation' },
+    { members: ['Diksha'], role: 'Student President', desc: 'Overall club leadership and external representation' },
     { members: ['Thaman S N'], role: 'President Elect', desc: 'Supporting leadership and continuity planning' },
     { members: ['P Sinchan Rao', 'Vaishnavi Purushotham'], role: 'Technical & Development', desc: 'Leading all UAV build, R&D, and engineering work' },
     { members: ['Kumar', 'Karthik K Bhat'], role: 'Operational Safety', desc: 'Flight operations management and safety compliance' },
@@ -64,7 +64,7 @@ const committee = {
 
 // Add image filenames here (placed under /public) as they become available.
 const studentPhotoMap = {
-  'Diksha Pandey': '',
+  'Diksha': '',
   'Thaman S N': 'thaman.jpeg',
   'P Sinchan Rao': 'sinchan.jpg',
   'Vaishnavi Purushotham': '',
@@ -73,7 +73,7 @@ const studentPhotoMap = {
   'Asma Banu': '',
   Shivshankar: '',
   'Pradhaan M N': 'pradhaan.jpeg',
-  'Achal K': '',
+  'Achal K': 'achal.jpeg',
   'Shrilakshmi M A': '',
   'Utkarsh Verma': 'utkarsh verma.jpeg',
   'Joel Babu': 'joel babu.jpeg',
