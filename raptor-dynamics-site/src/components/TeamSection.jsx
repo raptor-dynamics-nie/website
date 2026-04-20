@@ -377,24 +377,39 @@ export default function TeamSection() {
           </div>
         </ScrollReveal>
 
-        <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3" stagger={0.05} delayChildren={0.2}>
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-[repeat(5,minmax(0,1fr))] gap-3" stagger={0.07} delayChildren={0.2}>
           {committee.executiveMembers.map((name, i) => (
             <StaggerItem key={name} variant="fadeUp">
+              {(() => {
+                const studentPhotoSrc = toPublicSrc(studentPhotoMap[name] || '')
+                const studentInitials = getInitials(name)
+
+                return (
               <motion.div
-                className="flex items-center justify-center p-3 sm:p-4 clip-corner text-center h-full min-h-[70px] group transition-colors"
-                style={{ 
-                  background: 'rgba(255,255,255,0.02)', 
-                  border: '1px solid rgba(255,255,255,0.06)',
-                }}
-                whileHover={{ 
-                  background: 'rgba(232,255,0,0.04)', 
-                  borderColor: 'rgba(232,255,0,0.25)',
-                }}
+                className="flex flex-col items-center justify-center p-3.5 md:p-4 clip-corner group min-h-[220px] max-w-[220px]"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(16px) saturate(160%)', WebkitBackdropFilter: 'blur(16px) saturate(160%)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12)' }}
+                whileHover={{ borderColor: 'rgba(232,255,0,0.25)', background: 'rgba(232,255,0,0.03)' }}
+                transition={{ duration: 0.25 }}
               >
-                <span className="text-sm md:text-base font-semibold tracking-wide transition-colors group-hover:text-[var(--color-accent)]" style={{ color: 'rgba(245,245,245,0.85)' }}>
-                  {name}
-                </span>
+                <div className="flex items-start justify-center gap-2 flex-shrink-0 mb-4 w-full">
+                  <div className="w-full max-w-[88px] h-[5.5rem] md:h-24 clip-corner bg-zinc-900/70 overflow-hidden flex items-center justify-center" style={{ border: '1px solid rgba(255,255,255,0.14)' }}>
+                    {studentPhotoSrc ? (
+                      <img src={studentPhotoSrc} alt={name} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
+                    ) : (
+                      <span className="font-display text-xs" style={{ color: 'rgba(245,245,245,0.75)' }}>
+                        {studentInitials || 'RD'}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="min-w-0 w-full text-center">
+                  <div className="text-sm md:text-base tracking-wide font-bold leading-tight" style={{ color: 'var(--color-text)' }}>
+                    {name}
+                  </div>
+                </div>
               </motion.div>
+                )
+              })()}
             </StaggerItem>
           ))}
         </StaggerContainer>
