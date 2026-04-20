@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
@@ -14,6 +14,8 @@ export default function Navbar() {
   const [scrolled,       setScrolled]       = useState(false)
   const [menuOpen,       setMenuOpen]       = useState(false)
   const [activeSection,  setActiveSection]  = useState('')
+  const isClickNavigating = useRef(false)
+  const clickTimeout = useRef(null)
 
   // Scroll pill effect
   useEffect(() => {
@@ -28,6 +30,8 @@ export default function Navbar() {
     const OFFSET = 120  // px below the navbar to treat as "entered"
 
     const onScroll = () => {
+      if (isClickNavigating.current) return
+
       const y = window.scrollY + OFFSET
       let current = ''
       navLinks.forEach(({ id }) => {
@@ -120,6 +124,12 @@ export default function Navbar() {
                   onClick={(e) => {
                     e.preventDefault()
                     setActiveSection(link.id)
+                    isClickNavigating.current = true
+                    if (clickTimeout.current) clearTimeout(clickTimeout.current)
+                    clickTimeout.current = setTimeout(() => {
+                      isClickNavigating.current = false
+                    }, 1450) // slightly longer than Lenis 1.4s duration
+
                     const target = document.getElementById(link.id)
                     if (target && window.__lenis) {
                       window.__lenis.scrollTo(target, { offset: -80, duration: 1.4 })
@@ -129,13 +139,15 @@ export default function Navbar() {
                   }}
                 >
                   {link.label}
-                  {/* Underline — scales in when active, scales out when not */}
-                  <motion.span
-                    className="absolute bottom-0 left-0 h-[2px] w-full origin-left"
-                    style={{ background: 'var(--color-accent)', borderRadius: 2 }}
-                    animate={{ scaleX: isActive ? 1 : 0 }}
-                    transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  />
+                  {/* Underline — slides dynamically between items */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="navbar-underline"
+                      className="absolute bottom-0 left-0 h-[2px] w-full"
+                      style={{ background: 'var(--color-accent)', borderRadius: 2 }}
+                      transition={{ type: 'spring', stiffness: 350, damping: 35 }}
+                    />
+                  )}
                 </motion.a>
               )
             })}
@@ -229,6 +241,12 @@ export default function Navbar() {
                     e.preventDefault()
                     setMenuOpen(false)
                     setActiveSection(link.id)
+                    isClickNavigating.current = true
+                    if (clickTimeout.current) clearTimeout(clickTimeout.current)
+                    clickTimeout.current = setTimeout(() => {
+                      isClickNavigating.current = false
+                    }, 1800) // covers menu close (350ms) + Lenis scroll (1400ms)
+
                     setTimeout(() => {
                       const target = document.getElementById(link.id)
                       if (target && window.__lenis) {

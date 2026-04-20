@@ -1,6 +1,9 @@
+import { useEffect } from 'react'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
+
 /**
- * GlobalBackground — minimal ambient layer beneath all sections.
- * Pure CSS keyframe animations — zero JavaScript animation overhead.
+ * GlobalBackground — ambient layer beneath all sections.
+ * Features static CSS keyframe orbs + an interactive fluid-tracking cursor orb.
  */
 export default function GlobalBackground() {
   const orbs = [
@@ -10,6 +13,23 @@ export default function GlobalBackground() {
     { size: 360, x: '22%', y: '78%', color: 'rgba(232,255,0,0.014)', dur: '18s', delay: '-12s' },
     { size: 340, x: '72%', y: '88%', color: 'rgba(41,41,102,0.10)',  dur: '25s', delay: '-3s'  },
   ]
+
+  const mouseX = useMotionValue(typeof window !== 'undefined' ? window.innerWidth / 2 : 0)
+  const mouseY = useMotionValue(typeof window !== 'undefined' ? window.innerHeight / 2 : 0)
+
+  // Fluid mechanics config for the interactive moving patch
+  const springConfig = { damping: 40, stiffness: 120, mass: 0.8 }
+  const x = useSpring(mouseX, springConfig)
+  const y = useSpring(mouseY, springConfig)
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
+    }
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [mouseX, mouseY])
 
   return (
     <>
@@ -65,6 +85,23 @@ export default function GlobalBackground() {
             }}
           />
         ))}
+
+        {/* Interactive fluid yellow patch */}
+        <motion.div
+          style={{
+            position: 'absolute',
+            left: -400,
+            top: -400,
+            x: x,
+            y: y,
+            width: 800,
+            height: 800,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(232,255,0,0.05) 0%, transparent 60%)',
+            filter: 'blur(100px)',
+            willChange: 'transform',
+          }}
+        />
 
         {/* Barely-visible global grid */}
         <div

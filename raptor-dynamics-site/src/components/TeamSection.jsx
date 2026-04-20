@@ -51,14 +51,34 @@ const committee = {
     },
   ],
   studentRoles: [
-    { role: 'Student President', desc: 'Overall club leadership and external representation' },
-    { role: 'President Elect', desc: 'Supporting leadership and continuity planning' },
-    { role: 'Head — Technical & Development', desc: 'Leading all UAV build, R&D, and engineering work' },
-    { role: 'Head — Operations & Safety', desc: 'Flight operations management and safety compliance' },
-    { role: 'Head — Training, Events & Outreach', desc: 'Workshops, competitions, and community engagements' },
-    { role: 'Head — Documentation, Media & Logistics', desc: 'Club records, media production, and resource management' },
-    { role: 'Executive Members (×4)', desc: "Supporting all committees across the club's activities" },
+    { members: ['Diksha Pandey'], role: 'Student President', desc: 'Overall club leadership and external representation' },
+    { members: ['Thaman S N'], role: 'President Elect', desc: 'Supporting leadership and continuity planning' },
+    { members: ['P Sinchan Rao', 'Vaishnavi'], role: 'Head — Technical & Development', desc: 'Leading all UAV build, R&D, and engineering work' },
+    { members: ['Karthik K Bhat', 'Kumar'], role: 'Head — Operations & Safety', desc: 'Flight operations management and safety compliance' },
+    { members: ['Asma', 'Shivashankar'], role: 'Head — Training, Events & Outreach', desc: 'Workshops, competitions, and community engagements' },
+    { members: ['Pradhaan M N', 'Achal'], role: 'Head — Documentation, Media & Logistics', desc: 'Club records, media production, and resource management' },
+    { members: ['Shrilakshmi', 'Utkarsh Verma', 'Joel Babu', 'Vedant', 'Mohammed Rayan Hussian', 'Mahalakshmi'], role: 'Executive Members', desc: "Supporting all committees across the club's activities" },
   ],
+}
+
+// Add image filenames here (placed under /public) as they become available.
+const studentPhotoMap = {
+  'Diksha Pandey': '',
+  'Thaman S N': 'thaman.jpeg',
+  'P Sinchan Rao': '',
+  Vaishnavi: '',
+  'Karthik K Bhat': '',
+  Kumar: '',
+  Asma: '',
+  Shivashankar: '',
+  'Pradhaan M N': '',
+  Achal: '',
+  Shrilakshmi: '',
+  'Utkarsh Verma': 'utkarsh verma.jpeg',
+  'Joel Babu': 'joel babu.jpeg',
+  Vedant: '',
+  'Mohammed Rayan Hussian': 'mohammed rayan hussian.jpeg',
+  Mahalakshmi: 'mahalakshmi.jpeg',
 }
 
 // Map name → exact filename in public/
@@ -71,11 +91,24 @@ const photoMap = {
   'Dr. Anand A':             'anand.avif',
 }
 
+function toPublicSrc(fileName) {
+  if (!fileName) return null
+  return `${import.meta.env.BASE_URL}${encodeURIComponent(fileName)}`
+}
+
+function getInitials(name = '') {
+  return name
+    .split(/\s+|&/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0].toUpperCase())
+    .join('')
+}
+
 function PersonCard({ person, accent = false }) {
   const photoFile = photoMap[person.name]
-  const photoSrc = photoFile
-    ? `${import.meta.env.BASE_URL}${encodeURIComponent(photoFile)}`
-    : null
+  const photoSrc = toPublicSrc(photoFile)
 
   return (
     <motion.div
@@ -161,6 +194,24 @@ function PersonCard({ person, accent = false }) {
 }
 
 export default function TeamSection() {
+  const studentTiles = committee.studentRoles.flatMap((item) => {
+    const members = Array.isArray(item.members) ? item.members.filter(Boolean) : []
+
+    if (members.length === 0) {
+      return [{
+        memberName: '',
+        role: item.role,
+        desc: item.desc,
+      }]
+    }
+
+    return members.map((memberName) => ({
+      memberName,
+      role: item.role,
+      desc: item.desc,
+    }))
+  })
+
   return (
     <section id="team" className="relative py-32 px-6 md:px-12 lg:px-20" style={{ background: 'var(--color-surface)' }}>
       {/* BG accent */}
@@ -259,28 +310,51 @@ export default function TeamSection() {
           </div>
         </ScrollReveal>
 
-        <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3" stagger={0.07} delayChildren={0.1}>
-          {committee.studentRoles.map((item, i) => (
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-3" stagger={0.07} delayChildren={0.1}>
+          {studentTiles.map((tile, i) => (
             <StaggerItem key={i} variant="fadeUp">
+              {(() => {
+                const studentPhotoSrc = toPublicSrc(tile.memberName ? studentPhotoMap[tile.memberName] : '')
+                const studentInitials = getInitials(tile.memberName)
+
+                return (
               <motion.div
-                className="flex items-start gap-4 p-4 clip-corner group"
+                className="flex flex-col items-center justify-center p-3.5 md:p-4 clip-corner group min-h-[240px] max-w-[220px]"
                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(16px) saturate(160%)', WebkitBackdropFilter: 'blur(16px) saturate(160%)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12)' }}
                 whileHover={{ borderColor: 'rgba(232,255,0,0.25)', background: 'rgba(232,255,0,0.03)' }}
                 transition={{ duration: 0.25 }}
               >
-                <div
-                  className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                  style={{ background: 'var(--color-accent)', animation: `pulse-dot 2s ease-in-out infinite ${i * 0.2}s` }}
-                />
-                <div>
-                  <div className="text-sm font-semibold mb-1" style={{ color: 'var(--color-text)' }}>
-                    {item.role}
-                  </div>
-                  <div className="text-xs leading-relaxed" style={{ color: 'rgba(245,245,245,0.4)' }}>
-                    {item.desc}
+                <div className="flex items-start justify-center gap-2 flex-shrink-0 mb-4 w-full">
+                  {tile.memberName ? (
+                    <div className="w-full max-w-[92px] h-28 md:h-32 clip-corner bg-zinc-900/70 overflow-hidden flex items-center justify-center" style={{ border: '1px solid rgba(255,255,255,0.14)' }}>
+                      {studentPhotoSrc ? (
+                        <img src={studentPhotoSrc} alt={tile.memberName} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
+                      ) : (
+                        <span className="font-display text-xs" style={{ color: 'rgba(245,245,245,0.75)' }}>
+                          {studentInitials || 'RD'}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <div
+                      className="w-1.5 h-1.5 rounded-full mt-1.5"
+                      style={{ background: 'var(--color-accent)', animation: `pulse-dot 2s ease-in-out infinite ${i * 0.2}s` }}
+                    />
+                  )}
+                </div>
+                <div className="min-w-0 w-full text-center">
+                  {tile.memberName && (
+                    <div className="text-base md:text-lg tracking-wide font-bold leading-tight mb-1" style={{ color: 'var(--color-text)' }}>
+                      {tile.memberName}
+                    </div>
+                  )}
+                  <div className="text-[11px] uppercase tracking-[0.18em] font-semibold mb-1" style={{ color: 'var(--color-accent)' }}>
+                    {tile.role}
                   </div>
                 </div>
               </motion.div>
+                )
+              })()}
             </StaggerItem>
           ))}
         </StaggerContainer>

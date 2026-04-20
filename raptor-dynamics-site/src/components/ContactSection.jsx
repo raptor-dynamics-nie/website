@@ -53,6 +53,22 @@ export default function ContactSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    // Route data exactly as chosen: via the native mailto client
+    // Replace this email string with your actual club contact email 
+    const targetEmail = 'contact@raptordynamics.com'
+    const subject = encodeURIComponent(`Raptor Dynamics Form: ${formData.name}`)
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n` +
+      `Area of Interest: ${formData.interest}\n\n` +
+      `Message:\n${formData.message}`
+    )
+
+    // Trigger opening the default mail app with the pre-filled fields
+    window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`
+
+    // Instantly trigger the visual success animation
     setSubmitted(true)
   }
 
