@@ -58,8 +58,11 @@ const committee = {
     { members: ['Asma Banu', 'Shivshankar'], role: 'Training & Events', desc: 'Workshops, competitions, and community engagements' },
     { members: ['Pradhaan M N', 'Achal K'], role: 'Media & Logistics', desc: 'Club records, media production, and resource management' },
     { members: ['Mahalakshmi'], role: 'Event Management', desc: 'Planning and executing club events and competitions' },
-    { members: ['Joel Babu', 'Shrilakshmi M A', 'Utkarsh Verma', 'Mohammed Rayan Hussain', 'Keerthana', 'Yukthesha L', 'Dhureen P', 'Harish Gokhale', 'Vedant Patwari', 'Aditya Raj'], role: 'Executive Members', desc: "Supporting all committees across the club's activities" },
   ],
+  executiveMembers: [
+    'Joel Babu', 'Shrilakshmi M A', 'Utkarsh Verma', 'Mohammed Rayan Hussain', 
+    'Keerthana', 'Yukthesha L', 'Dhureen P', 'Harish Gokhale', 'Vedant Patwari', 'Aditya Raj'
+  ]
 }
 
 // Add image filenames here (placed under /public) as they become available.
@@ -361,6 +364,37 @@ export default function TeamSection() {
               </motion.div>
                 )
               })()}
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        {/* Executive Members */}
+        <ScrollReveal variant="fadeUp" delay={0.2}>
+          <div className="mb-5 mt-10">
+            <div className="text-[10px] tracking-[0.25em] uppercase font-bold" style={{ color: 'rgba(245,245,245,0.3)' }}>
+              ── Executive Members
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3" stagger={0.05} delayChildren={0.2}>
+          {committee.executiveMembers.map((name, i) => (
+            <StaggerItem key={name} variant="fadeUp">
+              <motion.div
+                className="flex items-center justify-center p-3 sm:p-4 clip-corner text-center h-full min-h-[70px] group transition-colors"
+                style={{ 
+                  background: 'rgba(255,255,255,0.02)', 
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}
+                whileHover={{ 
+                  background: 'rgba(232,255,0,0.04)', 
+                  borderColor: 'rgba(232,255,0,0.25)',
+                }}
+              >
+                <span className="text-sm md:text-base font-semibold tracking-wide transition-colors group-hover:text-[var(--color-accent)]" style={{ color: 'rgba(245,245,245,0.85)' }}>
+                  {name}
+                </span>
+              </motion.div>
             </StaggerItem>
           ))}
         </StaggerContainer>
