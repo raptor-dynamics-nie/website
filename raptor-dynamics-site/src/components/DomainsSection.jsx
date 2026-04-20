@@ -64,25 +64,25 @@ const applications = [
     code: 'APP-01',
     title: 'Precision Agriculture',
     desc: 'Crop health monitoring and field mapping via multispectral imaging. Aerial spraying systems for targeted pesticide delivery.',
-    tag: 'ACTIVE',
+    tag: 'UPCOMING',
   },
   {
     code: 'APP-02',
     title: 'Surveillance & Security',
     desc: 'Real-time aerial surveillance for perimeter monitoring, crowd analysis, and rapid response coordination with ground teams.',
-    tag: 'ACTIVE',
+    tag: 'UPCOMING',
   },
   {
     code: 'APP-03',
     title: 'Topographic Mapping',
     desc: 'High-resolution 3D terrain reconstruction using photogrammetry and LiDAR. Replacing weeks of manual survey with hours of autonomous flight.',
-    tag: 'ACTIVE',
+    tag: 'UPCOMING',
   },
   {
     code: 'APP-04',
     title: 'Disaster Management',
     desc: 'Search and rescue support using thermal imaging, delivery of emergency supplies to inaccessible zones, and post-disaster damage assessment.',
-    tag: 'ACTIVE',
+    tag: 'UPCOMING',
   },
 ]
 

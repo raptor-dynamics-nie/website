@@ -12,18 +12,19 @@ function HeroCanvas() {
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     let animId, t = 0
+    let W = 0, H = 0
 
     const resize = () => {
-      canvas.width  = canvas.offsetWidth  * window.devicePixelRatio
-      canvas.height = canvas.offsetHeight * window.devicePixelRatio
+      W = canvas.offsetWidth
+      H = canvas.offsetHeight
+      canvas.width  = W * window.devicePixelRatio
+      canvas.height = H * window.devicePixelRatio
       ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
     }
     resize()
     window.addEventListener('resize', resize)
 
     const draw = () => {
-      const W = canvas.offsetWidth
-      const H = canvas.offsetHeight
       ctx.clearRect(0, 0, W, H)
 
       // ── Subtle grid ──────────────────────────────────
@@ -217,7 +218,10 @@ export default function HeroSection() {
             <img
               src={`${import.meta.env.BASE_URL}raptor-logo.png`}
               alt="Raptor Dynamics"
-              className="w-64 lg:w-80 object-contain"
+              width="320"
+              height="256"
+              fetchpriority="high"
+              className="w-64 lg:w-80 h-auto object-contain"
               style={{ filter: 'brightness(0) invert(1)', opacity: 0.92 }}
             />
           </motion.div>

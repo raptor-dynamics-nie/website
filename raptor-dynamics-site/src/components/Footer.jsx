@@ -71,6 +71,8 @@ export default function Footer() {
                 <img
                   src={`${import.meta.env.BASE_URL}white-logo.png`}
                   alt="Raptor Dynamics"
+                  width="64"
+                  height="64"
                   className="w-16 h-16 object-contain"
                   style={{ opacity: 0.92 }}
                 />

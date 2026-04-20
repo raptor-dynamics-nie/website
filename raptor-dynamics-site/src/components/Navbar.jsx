@@ -97,6 +97,8 @@ export default function Navbar() {
             <img
               src={`${import.meta.env.BASE_URL}white-logo.png`}
               alt="Raptor Dynamics Logo"
+              width="80"
+              height="80"
               className="w-20 h-20 object-contain flex-shrink-0"
               style={{ opacity: 0.95 }}
             />
