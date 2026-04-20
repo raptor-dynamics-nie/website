@@ -1,0 +1,22 @@
+# Node modules
+raptor-dynamics-site/node_modules/
+
+# Build output
+raptor-dynamics-site/dist/
+
+# Vite cache
+raptor-dynamics-site/.vite/
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp working folders
+drone-frames/
+drone-frames-new/
+new-set-frames/
+*.zip
