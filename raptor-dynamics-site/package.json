@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://sinchan-rao.github.io/Raptor-dynamics-website",
+  "homepage": "https://raptor-dynamics.github.io/website/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
