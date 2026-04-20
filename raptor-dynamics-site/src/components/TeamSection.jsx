@@ -65,13 +65,13 @@ const committee = {
 const studentPhotoMap = {
   'Diksha Pandey': '',
   'Thaman S N': 'thaman.jpeg',
-  'P Sinchan Rao': '',
+  'P Sinchan Rao': 'sinchan.jpg',
   Vaishnavi: '',
-  'Karthik K Bhat': '',
+  'Karthik K Bhat': 'karthik.jpeg',
   Kumar: '',
   Asma: '',
   Shivashankar: '',
-  'Pradhaan M N': '',
+  'Pradhaan M N': 'pradhaan.jpeg',
   Achal: '',
   Shrilakshmi: '',
   'Utkarsh Verma': 'utkarsh verma.jpeg',
@@ -88,7 +88,7 @@ const photoMap = {
   'Dr. H N Divakar':         'divakar h n.avif',
   'Dr. Rajalekshmi Kishore': 'rajalekshmi kishore.avif',
   'Dr. Ashok K':             'ashok k.avif',
-  'Dr. Anand A':             'anand.avif',
+  'Dr. Anand A':             'anand.jpg',
 }
 
 function toPublicSrc(fileName) {
@@ -326,7 +326,7 @@ export default function TeamSection() {
               >
                 <div className="flex items-start justify-center gap-2 flex-shrink-0 mb-4 w-full">
                   {tile.memberName ? (
-                    <div className="w-full max-w-[92px] h-28 md:h-32 clip-corner bg-zinc-900/70 overflow-hidden flex items-center justify-center" style={{ border: '1px solid rgba(255,255,255,0.14)' }}>
+                    <div className="w-full max-w-[88px] h-[5.5rem] md:h-24 clip-corner bg-zinc-900/70 overflow-hidden flex items-center justify-center" style={{ border: '1px solid rgba(255,255,255,0.14)' }}>
                       {studentPhotoSrc ? (
                         <img src={studentPhotoSrc} alt={tile.memberName} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
                       ) : (
