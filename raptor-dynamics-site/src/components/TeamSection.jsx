@@ -67,17 +67,17 @@ const committee = {
 
 // Add image filenames here (placed under /public) as they become available.
 const studentPhotoMap = {
-  'Diksha': '',
+  'Diksha': 'diksha.jpeg',
   'Thaman S N': 'thaman.jpeg',
   'P Sinchan Rao': 'sinchan.jpg',
-  'Vaishnavi Purushotham': '',
+  'Vaishnavi Purushotham': 'vaishnavi.jpeg',
   'Karthik K Bhat': 'karthik.jpeg',
-  Kumar: '',
-  'Asma Banu': '',
+  Kumar: 'kumar.jpeg',
+  'Asma Banu': 'asma.jpeg',
   Shivshankar: '',
   'Pradhaan M N': 'pradhaan.jpeg',
   'Achal K': 'achal.jpeg',
-  'Shrilakshmi M A': '',
+  'Shrilakshmi M A': 'shrilakshmi.jpeg',
   'Utkarsh Verma': 'utkarsh verma.jpeg',
   'Joel Babu': 'joel babu.jpeg',
   'Vedant Patwari': '',
@@ -85,7 +85,7 @@ const studentPhotoMap = {
   Mahalakshmi: 'mahalakshmi.jpeg',
   Keerthana: '',
   'Yukthesha L': '',
-  'Dhureen P': '',
+  'Dhureen P': 'dhureen.jpeg',
   'Harish Gokhale': '',
   'Aditya Raj': '',
 }
