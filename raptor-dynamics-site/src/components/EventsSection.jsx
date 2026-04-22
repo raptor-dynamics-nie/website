@@ -6,26 +6,29 @@ import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 const events = [
   {
     id: 'EVT-01',
-    name: 'Inauguration',
+    name: 'Inauguration and Faculty Development Programme',
     subtitle: 'Official Club Launch',
     date: '2026-04-22',
     dateDisplay: '22 April 2026',
     venue: 'The National Institute of Engineering, Mysuru',
     description:
       'The official inauguration of Raptor Dynamics — marking the beginning of NIE\'s first dedicated UAV and aerial robotics club. Join us as we take flight.',
-    poster: 'inauguration-poster.png',
-    tag: 'UPCOMING',
+    poster: 'innauguration-fdp.jpeg',
+    tag: '',
     accent: true,
   },
 ]
 // ────────────────────────────────────────────────────────────────
 
-/** Days until event (negative = past) */
 function daysUntil(dateStr) {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
-  const target = new Date(dateStr)
-  return Math.ceil((target - today) / 86400000)
+  
+  const [y, m, d] = dateStr.split('-').map(Number)
+  const target = new Date(y, m - 1, d)
+  target.setHours(0, 0, 0, 0)
+  
+  return Math.round((target - today) / 86400000)
 }
 
 function CountdownBadge({ dateStr }) {
@@ -108,15 +111,17 @@ function EventCard({ event }) {
         <div>
           {/* Top row: tag + countdown */}
           <div className="flex items-center gap-3 mb-4">
-            <span
-              className="text-[10px] tracking-[0.25em] uppercase font-bold px-2 py-0.5 clip-corner"
-              style={{
-                background: event.accent ? 'rgba(232,255,0,0.12)' : 'rgba(255,255,255,0.06)',
-                color: event.accent ? '#e8ff00' : 'rgba(245,245,245,0.5)',
-              }}
-            >
-              {event.tag}
-            </span>
+            {event.tag && (
+              <span
+                className="text-[10px] tracking-[0.25em] uppercase font-bold px-2 py-0.5 clip-corner"
+                style={{
+                  background: event.accent ? 'rgba(232,255,0,0.12)' : 'rgba(255,255,255,0.06)',
+                  color: event.accent ? '#e8ff00' : 'rgba(245,245,245,0.5)',
+                }}
+              >
+                {event.tag}
+              </span>
+            )}
             <CountdownBadge dateStr={event.date} />
           </div>
 
