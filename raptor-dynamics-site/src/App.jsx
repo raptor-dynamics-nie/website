@@ -16,6 +16,7 @@ const EventsSection  = lazy(() => import('./components/EventsSection'))
 const MissionSection = lazy(() => import('./components/MissionSection'))
 const TeamSection    = lazy(() => import('./components/TeamSection'))
 const ContactSection = lazy(() => import('./components/ContactSection'))
+const GallerySection = lazy(() => import('./components/GallerySection'))
 const Footer         = lazy(() => import('./components/Footer'))
 
 // Skeleton fallback shown while lazy sections load
@@ -102,6 +103,9 @@ export default function App() {
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <TeamSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <GallerySection />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <ContactSection />
