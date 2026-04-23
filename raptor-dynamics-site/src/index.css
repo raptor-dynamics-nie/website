@@ -81,8 +81,6 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
-}
-
   /* Selection */
   ::selection {
     background: var(--color-accent);
