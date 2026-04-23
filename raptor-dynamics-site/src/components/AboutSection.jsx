@@ -89,27 +89,10 @@ export default function AboutSection() {
               </motion.h2>
             </ScrollReveal>
 
-            <ScrollReveal variant="fadeUp" delay={0.15}>
-              <p className="text-base leading-relaxed mb-4" style={{ color: 'rgba(245,245,245,0.55)' }}>
-                <strong style={{ color: 'var(--color-text)' }}>Raptor Dynamics</strong> is a student-driven drone technology club at
-                The National Institute of Engineering (NIE), Mysuru — focused on designing,
-                building, and deploying Unmanned Aerial Systems (UAVs).
-              </p>
-              <p className="text-base leading-relaxed mb-4" style={{ color: 'rgba(245,245,245,0.5)' }}>
-                We serve as a platform for hands-on learning in aerodynamics, flight control, embedded systems,
-                and AI-based applications. Members work on real-time projects, compete in national and international challenges,
-                and develop drone solutions for agriculture, surveillance, mapping, and disaster management.
-              </p>
-              <p className="text-base leading-relaxed" style={{ color: 'rgba(245,245,245,0.5)' }}>
-                Our culture encourages interdisciplinary collaboration, technical excellence, and innovation —
-                preparing students to become industry-ready engineers and future leaders in aerial robotics.
-              </p>
-            </ScrollReveal>
-
             {/* NIE affiliation note */}
-            <ScrollReveal variant="fadeUp" delay={0.25}>
+            <ScrollReveal variant="fadeUp" delay={0.15}>
               <div
-                className="mt-6 p-5 clip-corner"
+                className="mb-8 p-5 clip-corner"
                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
               >
                 {/* Logo + name row */}
@@ -156,6 +139,24 @@ export default function AboutSection() {
                   ))}
                 </div>
               </div>
+            </ScrollReveal>
+
+            {/* Club description */}
+            <ScrollReveal variant="fadeUp" delay={0.25}>
+              <p className="text-base leading-relaxed mb-4" style={{ color: 'rgba(245,245,245,0.55)' }}>
+                <strong style={{ color: 'var(--color-text)' }}>Raptor Dynamics</strong> is a student-driven drone technology club at
+                The National Institute of Engineering (NIE), Mysuru — focused on designing,
+                building, and deploying Unmanned Aerial Systems (UAVs).
+              </p>
+              <p className="text-base leading-relaxed mb-4" style={{ color: 'rgba(245,245,245,0.5)' }}>
+                We serve as a platform for hands-on learning in aerodynamics, flight control, embedded systems,
+                and AI-based applications. Members work on real-time projects, compete in national and international challenges,
+                and develop drone solutions for agriculture, surveillance, mapping, and disaster management.
+              </p>
+              <p className="text-base leading-relaxed" style={{ color: 'rgba(245,245,245,0.5)' }}>
+                Our culture encourages interdisciplinary collaboration, technical excellence, and innovation —
+                preparing students to become industry-ready engineers and future leaders in aerial robotics.
+              </p>
             </ScrollReveal>
           </div>
         </div>
