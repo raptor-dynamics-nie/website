@@ -3,19 +3,29 @@ import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
 import { useState } from 'react'
 
-const galleryItems = [
-  { id: 1, src: `${import.meta.env.BASE_URL}gallery/gallery-img-2.jpeg`, alt: 'Inauguration Day', size: 'large' },
-  { id: 2, src: `${import.meta.env.BASE_URL}gallery/gallery-img-1.jpeg`, alt: 'Inauguration Day', size: 'medium' },
-  { id: 3, src: `${import.meta.env.BASE_URL}gallery/gallery-img-3.jpeg`, alt: 'Inauguration Day', size: 'medium' },
-  { id: 4, src: `${import.meta.env.BASE_URL}gallery/gallery-img-4.jpeg`, alt: 'Inauguration Day', size: 'large' },
+const galleryRow1 = [
+  { id: 1, src: `${import.meta.env.BASE_URL}gallery/gallery-img-2.jpeg`, alt: 'Inauguration Day' },
+  { id: 2, src: `${import.meta.env.BASE_URL}gallery/gallery-img-1.jpeg`, alt: 'Inauguration Day' },
+  { id: 3, src: `${import.meta.env.BASE_URL}gallery/gallery-img-3.jpeg`, alt: 'Inauguration Day' },
+  { id: 4, src: `${import.meta.env.BASE_URL}gallery/gallery-img-4.jpeg`, alt: 'Inauguration Day' },
 ]
+
+const galleryRow2 = [
+  { id: 5, src: `${import.meta.env.BASE_URL}gallery/gallery-img-5.jpeg`, alt: 'Inauguration Day' },
+  { id: 6, src: `${import.meta.env.BASE_URL}gallery/gallery-img-6.jpeg`, alt: 'Inauguration Day' },
+  { id: 7, src: `${import.meta.env.BASE_URL}gallery/gallery-img-7.jpeg`, alt: 'Inauguration Day' },
+  { id: 8, src: `${import.meta.env.BASE_URL}gallery/gallery-img-8.jpeg`, alt: 'Inauguration Day' },
+  { id: 9, src: `${import.meta.env.BASE_URL}gallery/gallery-img-9.jpeg`, alt: 'Inauguration Day' },
+]
+
+const allGalleryItems = [...galleryRow1, ...galleryRow2]
 
 function AccordionItem({ item, index }) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
     <motion.div
-      className="relative overflow-hidden rounded-xl bg-white/5 border border-white/10 cursor-crosshair group origin-center"
+      className="relative overflow-hidden rounded-xl bg-white/5 border border-white/10 cursor-crosshair group origin-center h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       animate={{ flex: isHovered ? 3.5 : 1 }}
@@ -108,16 +118,23 @@ export default function GallerySection() {
         </div>
 
         <div className="mt-12">
-          {/* Desktop Interactive Accordion */}
-          <div className="hidden md:flex h-[500px] gap-3 w-full" onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}>
-            {galleryItems.map((item, index) => (
+          {/* Desktop Interactive Accordion - Row 1 */}
+          <div className="hidden md:flex h-[350px] lg:h-[400px] gap-3 w-full mb-3" onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}>
+            {galleryRow1.map((item, index) => (
               <AccordionItem key={item.id} item={item} index={index} />
+            ))}
+          </div>
+
+          {/* Desktop Interactive Accordion - Row 2 */}
+          <div className="hidden md:flex h-[350px] lg:h-[400px] gap-3 w-full" onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}>
+            {galleryRow2.map((item, index) => (
+              <AccordionItem key={item.id} item={item} index={galleryRow1.length + index} />
             ))}
           </div>
 
           {/* Mobile Horizontal Snap Scroll */}
           <StaggerContainer className="flex md:hidden overflow-x-auto gap-4 pb-8 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 mt-8">
-            {galleryItems.map((item, index) => (
+            {allGalleryItems.map((item, index) => (
               <StaggerItem 
                 key={item.id} 
                 className="relative group shrink-0 rounded-xl overflow-hidden bg-white/5 border border-white/10 snap-center h-[350px] min-w-[280px]"
