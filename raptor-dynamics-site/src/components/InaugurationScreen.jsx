@@ -199,7 +199,7 @@ export default function InaugurationScreen({ onLaunch }) {
       </motion.div>
 
       {/* Button & transition layer */}
-      <div className="absolute inset-0 flex items-center justify-center mt-[88vh] pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-center mt-[75vh] md:mt-[88vh] pointer-events-none">
 
         {/* Expanding shockwave — now accent-coloured */}
         <motion.div
