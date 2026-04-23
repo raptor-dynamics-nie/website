@@ -1,12 +1,11 @@
 import { motion } from 'framer-motion'
 import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
-// User uploaded gallery items
 const galleryItems = [
-  { id: 1, src: `${import.meta.env.BASE_URL}gallery/gallery-img-1.jpeg`, alt: 'Raptor Dynamics Event', size: 'large' },
-  { id: 2, src: `${import.meta.env.BASE_URL}gallery/gallery-img-2.jpeg`, alt: 'Team & Community', size: 'medium' },
-  { id: 3, src: `${import.meta.env.BASE_URL}gallery/gallery-img-3.jpeg`, alt: 'Inauguration Highlights', size: 'medium' },
-  { id: 4, src: `${import.meta.env.BASE_URL}gallery/gallery-img-4.jpeg`, alt: 'Aerial Robotics Launch', size: 'large' },
+  { id: 1, src: `${import.meta.env.BASE_URL}gallery/gallery-img-2.jpeg`, alt: 'Inauguration Day', size: 'large' },
+  { id: 2, src: `${import.meta.env.BASE_URL}gallery/gallery-img-1.jpeg`, alt: 'Inauguration Day', size: 'medium' },
+  { id: 3, src: `${import.meta.env.BASE_URL}gallery/gallery-img-3.jpeg`, alt: 'Inauguration Day', size: 'medium' },
+  { id: 4, src: `${import.meta.env.BASE_URL}gallery/gallery-img-4.jpeg`, alt: 'Inauguration Day', size: 'large' },
 ]
 
 export default function GallerySection() {
