@@ -66,33 +66,10 @@ export default function AboutSection() {
 
           {/* Right: text */}
           <div>
-            <ScrollReveal variant="slideLeft" delay={0}>
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-8 h-px" style={{ background: 'var(--color-accent)' }} />
-                <span className="text-xs tracking-[0.25em] uppercase font-semibold" style={{ color: 'var(--color-accent)' }}>
-                  About the Club
-                </span>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal variant="fadeUp" delay={0.1}>
-              <motion.h2 
-                className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.92] tracking-tight mb-6 inline-block cursor-crosshair origin-left" 
-                style={{ color: 'var(--color-text)' }}
-                whileHover={{ y: -6, scale: 1.05 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              >
-                STUDENT-DRIVEN<br />
-                <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.25)', WebkitTextFillColor: 'transparent' }}>
-                  UAV INNOVATION
-                </span>
-              </motion.h2>
-            </ScrollReveal>
-
             {/* NIE affiliation note */}
-            <ScrollReveal variant="fadeUp" delay={0.15}>
+            <ScrollReveal variant="fadeUp" delay={0}>
               <div
-                className="mb-8 p-5 clip-corner"
+                className="mb-12 p-5 clip-corner"
                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
               >
                 {/* Logo + name row */}
@@ -141,8 +118,32 @@ export default function AboutSection() {
               </div>
             </ScrollReveal>
 
+            {/* About the Club Header */}
+            <ScrollReveal variant="slideLeft" delay={0.05}>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-8 h-px" style={{ background: 'var(--color-accent)' }} />
+                <span className="text-xs tracking-[0.25em] uppercase font-semibold" style={{ color: 'var(--color-accent)' }}>
+                  About the Club
+                </span>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal variant="fadeUp" delay={0.1}>
+              <motion.h2 
+                className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.92] tracking-tight mb-6 inline-block cursor-crosshair origin-left" 
+                style={{ color: 'var(--color-text)' }}
+                whileHover={{ y: -6, scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+              >
+                STUDENT-DRIVEN<br />
+                <span style={{ WebkitTextStroke: '1px rgba(245,245,245,0.25)', WebkitTextFillColor: 'transparent' }}>
+                  UAV INNOVATION
+                </span>
+              </motion.h2>
+            </ScrollReveal>
+
             {/* Club description */}
-            <ScrollReveal variant="fadeUp" delay={0.25}>
+            <ScrollReveal variant="fadeUp" delay={0.2}>
               <p className="text-base leading-relaxed mb-4" style={{ color: 'rgba(245,245,245,0.55)' }}>
                 <strong style={{ color: 'var(--color-text)' }}>Raptor Dynamics</strong> is a student-driven drone technology club at
                 The National Institute of Engineering (NIE), Mysuru — focused on designing,
