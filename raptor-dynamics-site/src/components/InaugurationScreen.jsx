@@ -194,7 +194,7 @@ export default function InaugurationScreen({ onLaunch }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
         >
-          Build. Fly. <span style={{ color: 'rgba(232,255,0,0.7)' }}>Conquer.</span>
+          Innovate · Integrate · <span style={{ color: 'rgba(232,255,0,0.7)' }}>Elevate</span>
         </motion.p>
       </motion.div>
 
