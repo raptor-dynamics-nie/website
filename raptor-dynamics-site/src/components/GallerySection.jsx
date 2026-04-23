@@ -1,12 +1,66 @@
 import { motion } from 'framer-motion'
 import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
+import { useState } from 'react'
+
 const galleryItems = [
   { id: 1, src: `${import.meta.env.BASE_URL}gallery/gallery-img-2.jpeg`, alt: 'Inauguration Day', size: 'large' },
   { id: 2, src: `${import.meta.env.BASE_URL}gallery/gallery-img-1.jpeg`, alt: 'Inauguration Day', size: 'medium' },
   { id: 3, src: `${import.meta.env.BASE_URL}gallery/gallery-img-3.jpeg`, alt: 'Inauguration Day', size: 'medium' },
   { id: 4, src: `${import.meta.env.BASE_URL}gallery/gallery-img-4.jpeg`, alt: 'Inauguration Day', size: 'large' },
 ]
+
+function AccordionItem({ item, index }) {
+  const [isHovered, setIsHovered] = useState(false)
+
+  return (
+    <motion.div
+      className="relative overflow-hidden rounded-xl bg-white/5 border border-white/10 cursor-crosshair group origin-center"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      animate={{ flex: isHovered ? 3.5 : 1 }}
+      transition={{ type: "spring", bounce: 0.15, duration: 0.7 }}
+    >
+      <motion.img 
+        src={item.src} 
+        alt={item.alt}
+        className="absolute inset-0 w-full h-full object-cover origin-center"
+        animate={{
+          scale: isHovered ? 1.05 : 1.0,
+          filter: isHovered ? 'brightness(1.05)' : 'brightness(0.5)'
+        }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      />
+      
+      {/* Target Box Overlay */}
+      <div className="absolute inset-4 border border-[#e8ff00]/0 group-hover:border-[#e8ff00]/30 transition-colors duration-500 pointer-events-none mix-blend-overlay" />
+      
+      {/* Info Bar */}
+      <motion.div 
+        className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent flex flex-col justify-end"
+        animate={{
+          opacity: isHovered ? 1 : 0,
+          y: isHovered ? 0 : 20
+        }}
+        transition={{ duration: 0.3, delay: isHovered ? 0.1 : 0 }}
+      >
+        <p className="text-[#e8ff00] text-[10px] font-mono tracking-widest mb-1">ARCHIVE // 0{index + 1}</p>
+        <p className="text-white font-medium text-lg tracking-widest uppercase">{item.alt}</p>
+      </motion.div>
+
+      {/* Vertical Label (when not hovered) */}
+      <motion.div
+        className="absolute inset-0 flex items-end pb-8 pl-4"
+        animate={{ opacity: isHovered ? 0 : 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        <span className="text-white/30 font-mono text-xs tracking-[0.3em] uppercase -rotate-90 origin-bottom-left whitespace-nowrap">
+          {item.alt}
+        </span>
+      </motion.div>
+    </motion.div>
+  )
+}
 
 export default function GallerySection() {
   return (
@@ -53,56 +107,34 @@ export default function GallerySection() {
           </ScrollReveal>
         </div>
 
-        <StaggerContainer className="flex overflow-x-auto gap-4 md:gap-6 pb-8 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 md:-mx-12 md:px-12">
-          {galleryItems.map((item, index) => {
-            // Determine width based on assigned size
-            let widthClass = 'min-w-[280px] md:min-w-[320px]'
-            if (item.size === 'large') widthClass = 'min-w-[320px] md:min-w-[600px]'
-            else if (item.size === 'medium') widthClass = 'min-w-[300px] md:min-w-[450px]'
+        <div className="mt-12">
+          {/* Desktop Interactive Accordion */}
+          <div className="hidden md:flex h-[500px] gap-3 w-full" onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}>
+            {galleryItems.map((item, index) => (
+              <AccordionItem key={item.id} item={item} index={index} />
+            ))}
+          </div>
 
-            return (
+          {/* Mobile Horizontal Snap Scroll */}
+          <StaggerContainer className="flex md:hidden overflow-x-auto gap-4 pb-8 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 mt-8">
+            {galleryItems.map((item, index) => (
               <StaggerItem 
                 key={item.id} 
-                className={`relative group shrink-0 rounded-xl overflow-hidden bg-white/5 border border-white/10 snap-center h-[350px] md:h-[450px] ${widthClass}`}
+                className="relative group shrink-0 rounded-xl overflow-hidden bg-white/5 border border-white/10 snap-center h-[350px] min-w-[280px]"
               >
-                {/* Fallback pattern for when images are missing */}
                 <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0a]">
-                  <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
-                  
-                  {/* Subtle placeholder icon / text */}
-                  {item.src ? (
-                    <img 
-                      src={item.src} 
-                      alt={item.alt}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center gap-3 text-white/20">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
-                      </svg>
-                      <span className="text-xs tracking-widest font-mono">IMG_{String(index + 1).padStart(2, '0')}</span>
-                    </div>
-                  )}
+                  <img src={item.src} alt={item.alt} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
-
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/90 via-[#050505]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                  <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-[#e8ff00] text-xs font-mono tracking-widest mb-1">ARCHIVE // {new Date().getFullYear()}</p>
-                    <p className="text-white font-medium">{item.alt}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/90 via-[#050505]/20 to-transparent flex items-end p-6">
+                  <div>
+                    <p className="text-[#e8ff00] text-[10px] font-mono tracking-widest mb-1 opacity-80">ARCHIVE // 0{index + 1}</p>
+                    <p className="text-white font-medium text-sm tracking-widest uppercase">{item.alt}</p>
                   </div>
                 </div>
-
-                {/* Corner accent for premium feel */}
-                <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-[#e8ff00]/0 group-hover:border-[#e8ff00]/50 transition-colors duration-300" />
-                <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-[#e8ff00]/0 group-hover:border-[#e8ff00]/50 transition-colors duration-300" />
               </StaggerItem>
-            )
-          })}
-        </StaggerContainer>
+            ))}
+          </StaggerContainer>
+        </div>
 
       </div>
     </section>
