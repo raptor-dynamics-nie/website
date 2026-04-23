@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import Lenis from 'lenis'
 import './index.css'
 import GlobalBackground from './components/GlobalBackground'
@@ -6,6 +6,8 @@ import CustomCursor from './components/CustomCursor'
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
 import SkeletonSection from './components/SkeletonSection'
+import InaugurationScreen from './components/InaugurationScreen'
+import { AnimatePresence } from 'framer-motion'
 
 // Lazy-load all below-fold sections — they are NOT needed for initial paint
 const AboutSection   = lazy(() => import('./components/AboutSection'))
@@ -22,8 +24,13 @@ function SectionFallback() {
 }
 
 export default function App() {
+  const [hasLaunched, setHasLaunched] = useState(false)
+
   // ── Lenis smooth scroll ──────────────────────────────────────
   useEffect(() => {
+    // Only initialize scrolling AFTER the site has launched
+    if (!hasLaunched) return
+
     const lenis = new Lenis({
       duration: 1.4,          // scroll animation length in seconds
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo ease
@@ -46,10 +53,26 @@ export default function App() {
       lenis.destroy()
       window.__lenis = null
     }
-  }, [])
+  }, [hasLaunched])
+
+  // Lock body scroll while not launched as an extra precaution
+  useEffect(() => {
+    if (!hasLaunched) {
+      document.body.style.overflow = 'hidden'
+      window.scrollTo(0, 0)
+    } else {
+      document.body.style.overflow = ''
+    }
+  }, [hasLaunched])
 
   return (
     <div className="relative">
+      <AnimatePresence>
+        {!hasLaunched && (
+          <InaugurationScreen onLaunch={() => setHasLaunched(true)} />
+        )}
+      </AnimatePresence>
+
       {/* Global animated background — fixed behind all sections */}
       <GlobalBackground />
 
