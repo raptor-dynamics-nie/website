@@ -7,15 +7,15 @@ const events = [
   {
     id: 'EVT-01',
     name: 'Inauguration and Faculty Development Programme',
-    subtitle: 'Official Club Launch',
+    subtitle: 'Successfully Hosted',
     date: '2026-04-22',
     dateDisplay: '22 April 2026',
     venue: 'The National Institute of Engineering, Mysuru',
     description:
-      'The official inauguration of Raptor Dynamics — marking the beginning of NIE\'s first dedicated UAV and aerial robotics club. Join us as we take flight.',
+      'We successfully concluded the official inauguration of Raptor Dynamics! This milestone marks the formal beginning of NIE\'s first dedicated UAV and aerial robotics club.',
     poster: 'innauguration-fdp.jpeg',
-    tag: '',
-    accent: true,
+    tag: 'COMPLETED',
+    accent: false,
   },
 ]
 // ────────────────────────────────────────────────────────────────
