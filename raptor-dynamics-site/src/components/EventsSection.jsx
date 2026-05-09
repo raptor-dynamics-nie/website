@@ -5,6 +5,19 @@ import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 // ── Add future events here ──────────────────────────────────────
 const events = [
   {
+    id: 'EVT-02',
+    name: 'Recruitment Drive',
+    subtitle: 'Successfully Hosted',
+    date: '2026-05-09',
+    dateDisplay: 'May 2026',
+    venue: 'The National Institute of Engineering, Mysuru',
+    description:
+      'We successfully hosted our first major recruitment drive, welcoming a new cohort of talented individuals passionate about UAVs and aerial robotics to join Raptor Dynamics.',
+    poster: 'recruitment-drive-poster.jpeg',
+    tag: 'COMPLETED',
+    accent: true,
+  },
+  {
     id: 'EVT-01',
     name: 'Inauguration and Faculty Development Programme',
     subtitle: 'Successfully Hosted',
