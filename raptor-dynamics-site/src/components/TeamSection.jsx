@@ -71,7 +71,7 @@ const studentPhotoMap = {
   'Karthik K Bhat': 'karthik.jpeg',
   Kumar: 'kumar.jpeg',
   'Asma Banu': 'asma.jpeg',
-  Shivshankar: '',
+  Shivshankar: 'shivshankar.jpeg',
   'Pradhaan M N': 'pradhaan.jpeg',
   'Achal K': 'achal.jpeg',
   'Joel Babu': 'joel babu.jpeg',
