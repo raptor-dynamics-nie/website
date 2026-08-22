@@ -60,7 +60,7 @@ const committee = {
   ],
   members: [
     'Joel Babu', 'Mohammed Rayan Hussain',
-    'ARYA RAJANI MISHRA', 'Jnanethri.M', 'Rahul D N', 'sohan patil b', 'Tanmay Biswal'
+    'Arya Rajani Mishra', 'Jnanethri M', 'Rahul D N', 'Sohan Patil B', 'Tanmay Biswal'
   ]
 }
 
@@ -77,10 +77,10 @@ const studentPhotoMap = {
   'Achal K': 'achal.jpeg',
   'Joel Babu': 'joel babu.jpeg',
   'Mohammed Rayan Hussain': 'mohammed rayan hussian.jpeg',
-  'ARYA RAJANI MISHRA': 'ARYA RAJANI MISHRA.jpeg',
-  'Jnanethri.M': 'Jnanethri.M.jpeg',
+  'Arya Rajani Mishra': 'ARYA RAJANI MISHRA.jpeg',
+  'Jnanethri M': 'Jnanethri.M.jpeg',
   'Rahul D N': 'Rahul D N.jpeg',
-  'sohan patil b': 'sohan patil b.jpeg',
+  'Sohan Patil B': 'sohan patil b.jpeg',
   'Tanmay Biswal': 'Tanmay Biswal.jpeg',
 }
 
