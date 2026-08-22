@@ -59,7 +59,8 @@ const committee = {
     { members: ['Pradhaan M N', 'Achal K'], role: 'Media & Logistics', desc: 'Club records, media production, and resource management' },
   ],
   members: [
-    'Joel Babu', 'Mohammed Rayan Hussain'
+    'Joel Babu', 'Mohammed Rayan Hussain',
+    'ARYA RAJANI MISHRA', 'Jnanethri.M', 'Rahul D N', 'sohan patil b', 'Tanmay Biswal'
   ]
 }
 
@@ -76,6 +77,11 @@ const studentPhotoMap = {
   'Achal K': 'achal.jpeg',
   'Joel Babu': 'joel babu.jpeg',
   'Mohammed Rayan Hussain': 'mohammed rayan hussian.jpeg',
+  'ARYA RAJANI MISHRA': 'ARYA RAJANI MISHRA.jpeg',
+  'Jnanethri.M': 'Jnanethri.M.jpeg',
+  'Rahul D N': 'Rahul D N.jpeg',
+  'sohan patil b': 'sohan patil b.jpeg',
+  'Tanmay Biswal': 'Tanmay Biswal.jpeg',
 }
 
 // Map name → exact filename in public/
