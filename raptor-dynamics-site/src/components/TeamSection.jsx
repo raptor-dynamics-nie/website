@@ -59,8 +59,10 @@ const committee = {
     { members: ['Pradhaan M N', 'Achal K'], role: 'Media & Logistics', desc: 'Club records, media production, and resource management' },
   ],
   members: [
-    'Joel Babu', 'Mohammed Rayan Hussain',
     'Arya Rajani Mishra', 'Jnanethri M', 'Rahul D N', 'Sohan Patil B', 'Tanmay Biswal'
+  ],
+  executiveMembers: [
+    'Joel Babu', 'Mohammed Rayan Hussain'
   ]
 }
 
@@ -353,6 +355,52 @@ export default function TeamSection() {
                   )}
                   <div className="text-[11px] uppercase tracking-[0.18em] font-semibold mb-1" style={{ color: 'var(--color-accent)' }}>
                     {tile.role}
+                  </div>
+                </div>
+              </motion.div>
+                )
+              })()}
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        {/* Executive Members */}
+        <ScrollReveal variant="fadeUp" delay={0.2}>
+          <div className="mb-5 mt-10">
+            <div className="text-[10px] tracking-[0.25em] uppercase font-bold" style={{ color: 'rgba(245,245,245,0.3)' }}>
+              ── Executive Members
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-[repeat(5,minmax(0,1fr))] gap-3" stagger={0.07} delayChildren={0.2}>
+          {committee.executiveMembers.map((name, i) => (
+            <StaggerItem key={name} variant="fadeUp">
+              {(() => {
+                const studentPhotoSrc = toPublicSrc(studentPhotoMap[name] || '')
+                const studentInitials = getInitials(name)
+
+                return (
+              <motion.div
+                className="flex flex-col items-center justify-center p-3.5 md:p-4 clip-corner group min-h-[220px] max-w-[220px]"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(16px) saturate(160%)', WebkitBackdropFilter: 'blur(16px) saturate(160%)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12)' }}
+                whileHover={{ borderColor: 'rgba(232,255,0,0.25)', background: 'rgba(232,255,0,0.03)' }}
+                transition={{ duration: 0.25 }}
+              >
+                <div className="flex items-start justify-center gap-2 flex-shrink-0 mb-4 w-full">
+                  <div className="w-full max-w-[88px] h-[5.5rem] md:h-24 clip-corner bg-zinc-900/70 overflow-hidden flex items-center justify-center" style={{ border: '1px solid rgba(255,255,255,0.14)' }}>
+                    {studentPhotoSrc ? (
+                      <img src={studentPhotoSrc} alt={name} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
+                    ) : (
+                      <span className="font-display text-xs" style={{ color: 'rgba(245,245,245,0.75)' }}>
+                        {studentInitials || 'RD'}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="min-w-0 w-full text-center">
+                  <div className="text-sm md:text-base tracking-wide font-bold leading-tight" style={{ color: 'var(--color-text)' }}>
+                    {name}
                   </div>
                 </div>
               </motion.div>
