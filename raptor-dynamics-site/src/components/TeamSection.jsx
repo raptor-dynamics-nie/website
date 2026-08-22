@@ -53,15 +53,13 @@ const committee = {
   studentRoles: [
     { members: ['Diksha'], role: 'Student President', desc: 'Overall club leadership and external representation' },
     { members: ['Thaman S N'], role: 'President Elect', desc: 'Supporting leadership and continuity planning' },
-    { members: ['P Sinchan Rao', 'Vaishnavi Purushotham'], role: 'Technical & Development', desc: 'Leading all UAV build, R&D, and engineering work' },
+    { members: ['P Sinchan Rao'], role: 'Technical & Development', desc: 'Leading all UAV build, R&D, and engineering work' },
     { members: ['Kumar', 'Karthik K Bhat'], role: 'Operational Safety', desc: 'Flight operations management and safety compliance' },
     { members: ['Asma Banu', 'Shivshankar'], role: 'Training & Events', desc: 'Workshops, competitions, and community engagements' },
     { members: ['Pradhaan M N', 'Achal K'], role: 'Media & Logistics', desc: 'Club records, media production, and resource management' },
-    { members: ['Mahalakshmi'], role: 'Event Management', desc: 'Planning and executing club events and competitions' },
   ],
   executiveMembers: [
-    'Joel Babu', 'Shrilakshmi M A', 'Utkarsh Verma', 'Mohammed Rayan Hussain', 
-    'Keerthana', 'Yukthesha L', 'Dhureen P', 'Harish Gokhale', 'Vedant Patwari', 'Aditya Raj'
+    'Joel Babu', 'Mohammed Rayan Hussain'
   ]
 }
 
@@ -70,24 +68,14 @@ const studentPhotoMap = {
   'Diksha': 'diksha.jpeg',
   'Thaman S N': 'thaman.jpeg',
   'P Sinchan Rao': 'sinchan.jpg',
-  'Vaishnavi Purushotham': 'vaishnavi.jpeg',
   'Karthik K Bhat': 'karthik.jpeg',
   Kumar: 'kumar.jpeg',
   'Asma Banu': 'asma.jpeg',
   Shivshankar: '',
   'Pradhaan M N': 'pradhaan.jpeg',
   'Achal K': 'achal.jpeg',
-  'Shrilakshmi M A': 'shrilakshmi.jpeg',
-  'Utkarsh Verma': 'utkarsh verma.jpeg',
   'Joel Babu': 'joel babu.jpeg',
-  'Vedant Patwari': '',
   'Mohammed Rayan Hussain': 'mohammed rayan hussian.jpeg',
-  Mahalakshmi: 'mahalakshmi.jpeg',
-  Keerthana: '',
-  'Yukthesha L': '',
-  'Dhureen P': 'dhureen.jpeg',
-  'Harish Gokhale': '',
-  'Aditya Raj': '',
 }
 
 // Map name → exact filename in public/
