@@ -1,4 +1,16 @@
-# React + Vite
+# Raptor Dynamics website
+
+## Manage the team
+
+Run the following from this folder:
+
+```bash
+npm run team
+```
+
+The guided manager lets you add or remove a person, add/replace/remove a photo, then optionally commit, push, and publish the site. It updates [team.json](src/data/team.json), not the page code. For a photo, enter its path when prompted; the manager copies it into `public/` and associates it with the selected person.
+
+## Development
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

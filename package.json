@@ -1,0 +1,8 @@
+{
+  "name": "raptor-dynamics-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix raptor-dynamics-site run dev",
+    "team": "node raptor-dynamics-site/scripts/manage-team.mjs"
+  }
+}
