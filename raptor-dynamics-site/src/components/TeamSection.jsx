@@ -59,7 +59,9 @@ const committee = {
     { members: ['Pradhaan M N', 'Achal K'], role: 'Media & Logistics', desc: 'Club records, media production, and resource management' },
   ],
   members: [
-    'Arya Rajani Mishra', 'Jnanethri M', 'Rahul D N', 'Sohan Patil B', 'Tanmay Biswal'
+    'Arya Rajani Mishra', 'Jnanethri M', 'Rahul D N', 'Sohan Patil B', 'Tanmay Biswal',
+    'Lipika M Rao', 'RDSS Divyamsh', 'Chinmayee K', 'S Madumitha', 'Shailie Sinha',
+    'Achintya Shastry K', 'Gagan Subbaiah ML', 'Pramath N', 'Sudhan S Kulal'
   ],
   executiveMembers: [
     'Joel Babu', 'Mohammed Rayan Hussain'
