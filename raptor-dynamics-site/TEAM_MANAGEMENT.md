@@ -1,4 +1,5 @@
-# Team Management CLI aug 23   .
+# Team Management CLI aug 23   ...
+
 
 A zero-dependency interactive CLI to manage the **Team Section** data and photos without editing code.
 
