@@ -27,6 +27,40 @@ const answer = async (question, optional = false) => {
   return value
 }
 
+// Reads a token without echoing it to the terminal. It is used only for the
+// current GitHub Pages deployment and is never written to disk.
+async function secret(question) {
+  if (!stdin.isTTY) return answer(question)
+
+  rl.pause()
+  return new Promise((resolve) => {
+    let value = ''
+    stdout.write(question)
+    stdin.setRawMode(true)
+
+    const done = () => {
+      stdin.off('data', onData)
+      stdin.setRawMode(false)
+      stdout.write('\n')
+      rl.resume()
+      resolve(value)
+    }
+    const onData = (chunk) => {
+      const key = chunk.toString('utf8')
+      if (key === '\r' || key === '\n') return done()
+      if (key === '\u0003') process.exit(1)
+      if (key === '\b' || key === '\u007f') {
+        value = value.slice(0, -1)
+        return
+      }
+      value += key
+    }
+
+    stdin.on('data', onData)
+    stdin.resume()
+  })
+}
+
 function initials(name) {
   return name.split(/\s+|&/).filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join('')
 }
@@ -166,8 +200,11 @@ async function commitAndPush() {
   console.log('\nChanges committed and pushed.')
 
   if ((await answer('Publish the website now? (y/N): ', true)).toLowerCase() === 'y') {
+    const token = await secret('GitHub PAT for this one deployment (input is hidden): ')
+    if (!token) throw new Error('A GitHub PAT is required to publish the website.')
+    const deploymentRepo = `https://x-access-token:${encodeURIComponent(token)}@github.com/raptor-dynamics-nie/website.git`
     runNodeScript(join(root, 'node_modules', 'vite', 'bin', 'vite.js'), ['build'])
-    runNodeScript(join(root, 'node_modules', 'gh-pages', 'bin', 'gh-pages.js'), ['-d', 'dist'])
+    runNodeScript(join(root, 'node_modules', 'gh-pages', 'bin', 'gh-pages.js'), ['-d', 'dist', '--repo', deploymentRepo])
     console.log('Website published.')
   }
 }
