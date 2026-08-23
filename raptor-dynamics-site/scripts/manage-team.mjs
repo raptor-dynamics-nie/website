@@ -189,6 +189,7 @@ async function commitAndPush() {
     'README.md',
     'scripts/manage-team.mjs',
     'src/components/TeamSection.jsx',
+    'src/components/EventsSection.jsx',
     'src/data/team.json',
     ...changedPhotos,
   ].map((file) => `raptor-dynamics-site/${file}`)
