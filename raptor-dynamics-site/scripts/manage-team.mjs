@@ -224,8 +224,11 @@ async function commitAndPush() {
   const message = await answer('Commit message: ')
   runGit(['commit', '-m', message])
 
-  runGit(['push', 'git@github.com:raptor-dynamics-nie/website.git'])
-  console.log('\nChanges committed and pushed via SSH.')
+  const token = await secret('GitHub PAT for git push (input is hidden): ')
+  if (!token) throw new Error('A GitHub PAT is required to push changes.')
+  const pushRepo = `https://x-access-token:${encodeURIComponent(token)}@github.com/raptor-dynamics-nie/website.git`
+  runGit(['push', pushRepo])
+  console.log('\nChanges committed and pushed.')
 
   if ((await answer('Publish the website now? (y/N): ', true)).toLowerCase() === 'y') {
     const token = await secret('GitHub PAT for this one deployment (input is hidden): ')
