@@ -184,17 +184,43 @@ function runNodeScript(script, args) {
 }
 
 async function commitAndPush() {
-  const appFiles = [
-    'package.json',
+  const candidateFiles = [
     'README.md',
     'scripts/manage-team.mjs',
     'src/components/TeamSection.jsx',
-    'src/components/EventsSection.jsx',
     'src/data/team.json',
+    'TEAM_MANAGEMENT.md',
     ...changedPhotos,
   ].map((file) => `raptor-dynamics-site/${file}`)
-  const files = ['package.json', ...appFiles]
-  runGit(['add', '--', ...files])
+
+  const existingFiles = []
+  for (const file of candidateFiles) {
+    try {
+      await access(join(workspaceRoot, file), constants.F_OK)
+      existingFiles.push(file)
+    } catch {
+      // file doesn't exist, skip
+    }
+  }
+
+  if (existingFiles.length === 0) {
+    console.log('No team-related changes to commit.')
+    return
+  }
+
+  runGit(['add', '--', ...existingFiles])
+
+  const statusResult = spawnSync('git', ['status', '--porcelain', '--', ...existingFiles], {
+    cwd: workspaceRoot,
+    stdio: 'pipe',
+    encoding: 'utf8',
+  })
+
+  if (!statusResult.stdout.trim()) {
+    console.log('No changes staged. Nothing to commit.')
+    return
+  }
+
   const message = await answer('Commit message: ')
   runGit(['commit', '-m', message])
   runGit(['push'])
