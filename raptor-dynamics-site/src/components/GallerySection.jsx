@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
+import ScrollReveal from './ScrollReveal'
 
 import { useState } from 'react'
 
@@ -8,17 +8,22 @@ const galleryRow1 = [
   { id: 2, src: `${import.meta.env.BASE_URL}gallery/gallery-img-1.jpeg`, alt: 'Inauguration Day' },
   { id: 3, src: `${import.meta.env.BASE_URL}gallery/gallery-img-3.jpeg`, alt: 'Inauguration Day' },
   { id: 4, src: `${import.meta.env.BASE_URL}gallery/gallery-img-4.jpeg`, alt: 'Inauguration Day' },
+  { id: 5, src: `${import.meta.env.BASE_URL}gallery/orientation.jpeg`, alt: 'Orientation' },
+  { id: 6, src: `${import.meta.env.BASE_URL}gallery/orientation1.jpeg`, alt: 'Orientation' },
+  { id: 7, src: `${import.meta.env.BASE_URL}gallery/orientation2.jpeg`, alt: 'Orientation' },
+  { id: 8, src: `${import.meta.env.BASE_URL}gallery/orientation%20test.jpeg`, alt: 'Orientation' },
+  { id: 9, src: `${import.meta.env.BASE_URL}gallery/orientation%20test2.jpeg`, alt: 'Orientation' },
+  { id: 10, src: `${import.meta.env.BASE_URL}gallery/drone%20workshop.jpeg`, alt: 'Drone Workshop' },
+  { id: 11, src: `${import.meta.env.BASE_URL}gallery/drone%20workshop2.jpeg`, alt: 'Drone Workshop' },
+  { id: 12, src: `${import.meta.env.BASE_URL}gallery/cad%20workshop.jpeg`, alt: 'CAD Workshop' },
 ]
 
 const galleryRow2 = [
-  { id: 5, src: `${import.meta.env.BASE_URL}gallery/gallery-img-5.jpeg`, alt: 'Inauguration Day' },
-  { id: 6, src: `${import.meta.env.BASE_URL}gallery/gallery-img-6.jpeg`, alt: 'Inauguration Day' },
-  { id: 7, src: `${import.meta.env.BASE_URL}gallery/gallery-img-7.jpeg`, alt: 'Inauguration Day' },
-  { id: 8, src: `${import.meta.env.BASE_URL}gallery/gallery-img-8.jpeg`, alt: 'Inauguration Day' },
-  { id: 9, src: `${import.meta.env.BASE_URL}gallery/gallery-img-9.jpeg`, alt: 'Inauguration Day' },
+  { id: 5, src: `${import.meta.env.BASE_URL}gallery/gallery-img-5.jpeg`, alt: 'Drones' },
+  { id: 6, src: `${import.meta.env.BASE_URL}gallery/gallery-img-6.jpeg`, alt: 'Drones' },
+  { id: 7, src: `${import.meta.env.BASE_URL}gallery/gallery-img-7.jpeg`, alt: 'Drones' },
+  { id: 8, src: `${import.meta.env.BASE_URL}gallery/gallery-img-8.jpeg`, alt: 'Drones' },
 ]
-
-const allGalleryItems = [...galleryRow1, ...galleryRow2]
 
 function AccordionItem({ item, index }) {
   const [isHovered, setIsHovered] = useState(false)
@@ -117,40 +122,30 @@ export default function GallerySection() {
           </ScrollReveal>
         </div>
 
-        <div className="mt-12">
-          {/* Desktop Interactive Accordion - Row 1 */}
-          <div className="hidden md:flex h-[350px] lg:h-[400px] gap-3 w-full mb-3" onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}>
-            {galleryRow1.map((item, index) => (
-              <AccordionItem key={item.id} item={item} index={index} />
-            ))}
+        <div className="mt-12 flex flex-col gap-6">
+          {/* Row 1: Events and Programmes */}
+          <div className="overflow-x-auto hide-scrollbar pb-4 -mx-6 px-6 md:mx-0 md:px-0">
+            <div 
+              className="flex h-[350px] lg:h-[400px] gap-3 w-[250%] sm:w-[175%] md:w-[150%] lg:w-[125%] min-w-[900px]" 
+              onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}
+            >
+              {galleryRow1.map((item, index) => (
+                <AccordionItem key={item.id} item={item} index={index} />
+              ))}
+            </div>
           </div>
 
-          {/* Desktop Interactive Accordion - Row 2 */}
-          <div className="hidden md:flex h-[350px] lg:h-[400px] gap-3 w-full" onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}>
-            {galleryRow2.map((item, index) => (
-              <AccordionItem key={item.id} item={item} index={galleryRow1.length + index} />
-            ))}
+          {/* Row 2: Drones */}
+          <div className="overflow-x-auto hide-scrollbar pb-4 -mx-6 px-6 md:mx-0 md:px-0">
+            <div 
+              className="flex h-[350px] lg:h-[400px] gap-3 w-[250%] sm:w-[175%] md:w-[150%] lg:w-[125%] min-w-[900px]" 
+              onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}
+            >
+              {galleryRow2.map((item, index) => (
+                <AccordionItem key={item.id} item={item} index={galleryRow1.length + index} />
+              ))}
+            </div>
           </div>
-
-          {/* Mobile Horizontal Snap Scroll */}
-          <StaggerContainer className="flex md:hidden overflow-x-auto gap-4 pb-8 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 mt-8">
-            {allGalleryItems.map((item, index) => (
-              <StaggerItem 
-                key={item.id} 
-                className="relative group shrink-0 rounded-xl overflow-hidden bg-white/5 border border-white/10 snap-center h-[350px] min-w-[280px]"
-              >
-                <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0a]">
-                  <img src={item.src} alt={item.alt} className="absolute inset-0 w-full h-full object-cover" />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/90 via-[#050505]/20 to-transparent flex items-end p-6">
-                  <div>
-                    <p className="text-[#e8ff00] text-[10px] font-mono tracking-widest mb-1 opacity-80">ARCHIVE // 0{index + 1}</p>
-                    <p className="text-white font-medium text-sm tracking-widest uppercase">{item.alt}</p>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
         </div>
 
       </div>

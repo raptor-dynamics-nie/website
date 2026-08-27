@@ -4,6 +4,20 @@ import ScrollReveal from './ScrollReveal'
 
 const events = [
   {
+    id: 'EVT-03',
+    name: 'Inauguration of Center for Drone Technology and Research & Launch of Raptor Dynamics',
+    subtitle: 'Successfully Hosted',
+    date: '2026-04-23',
+    dateDisplay: '23 April 2026 | 4:00 PM',
+    venue: 'Center for Drone Technology and Research, Admin Block, NIE, Mysuru',
+    description:
+      'The National Institute of Engineering, Mysuru, successfully inaugurated the Center for Drone Technology and Research and officially launched Raptor Dynamics, a student-driven UAV and aerial robotics club. The event also marked the signing of a Memorandum of Understanding (MoU) with Aviocian Technologies Pvt. Ltd., strengthening industry collaboration in drone technology and research.',
+    poster: 'innaguration.jpeg',
+    tag: 'COMPLETED',
+    accent: true,
+    highlight: 'Signing of MoU with Aviocian Technologies Pvt. Ltd.',
+  },
+  {
     id: 'EVT-02',
     name: 'Recruitment Drive',
     subtitle: 'Successfully Hosted',
@@ -185,6 +199,13 @@ function EventDetailsModal({ event, onClose, reducedMotion }) {
           <p className="mt-7 text-base leading-relaxed" style={{ color: 'rgba(245,245,245,0.72)' }}>
             {event.description}
           </p>
+
+          {event.highlight && (
+            <div className="mt-6 p-4 rounded-lg" style={{ background: 'rgba(232,255,0,0.08)', border: '1px solid rgba(232,255,0,0.15)' }}>
+              <div className="text-[10px] tracking-[0.16em] uppercase mb-1" style={{ color: 'var(--color-accent)' }}>Key Highlight</div>
+              <div className="text-sm leading-relaxed" style={{ color: 'rgba(245,245,245,0.85)' }}>{event.highlight}</div>
+            </div>
+          )}
 
           <div className="mt-8 pt-6 grid gap-4 text-sm" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
             <div className="flex items-start gap-3">
