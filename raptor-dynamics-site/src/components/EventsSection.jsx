@@ -4,18 +4,46 @@ import ScrollReveal from './ScrollReveal'
 
 const events = [
   {
-    id: 'EVT-03',
-    name: 'Inauguration of Center for Drone Technology and Research & Launch of Raptor Dynamics',
-    subtitle: 'Successfully Hosted',
-    date: '2026-04-23',
-    dateDisplay: '23 April 2026 | 4:00 PM',
-    venue: 'Center for Drone Technology and Research, Admin Block, NIE, Mysuru',
+    id: 'EVT-06',
+    name: 'KiCad Workshop',
+    subtitle: 'Successfully Conducted',
+    date: '2026-08-21',
+    dateDisplay: '21 August 2026',
+    venue: 'The National Institute of Engineering, Mysuru',
     description:
-      'The National Institute of Engineering, Mysuru, successfully inaugurated the Center for Drone Technology and Research and officially launched Raptor Dynamics, a student-driven UAV and aerial robotics club. The event also marked the signing of a Memorandum of Understanding (MoU) with Aviocian Technologies Pvt. Ltd., strengthening industry collaboration in drone technology and research.',
-    poster: 'innaguration.jpeg',
+      'Raptor Dynamics successfully conducted a hands-on KiCad Workshop, introducing students to the fundamentals of open-source PCB design and electronics development. The workshop provided practical exposure to schematic capture, PCB layout, design rule checking, 3D visualization, and Gerber generation, helping participants understand the complete workflow from circuit design to a manufacturing-ready PCB.',
+    poster: 'kicad-workshop.png',
     tag: 'COMPLETED',
     accent: true,
-    highlight: 'Signing of MoU with Aviocian Technologies Pvt. Ltd.',
+    highlight: 'Resource Person: P Sinchan Rao',
+  },
+  {
+    id: 'EVT-05',
+    name: 'Microcontroller Workshop',
+    subtitle: 'Successfully Conducted',
+    date: '2026-08-17',
+    dateDisplay: '17 August 2026',
+    venue: 'The National Institute of Engineering, Mysuru',
+    description:
+      'Raptor Dynamics successfully conducted a hands-on Microcontroller Workshop, introducing students to the fundamentals of microcontrollers and their applications in UAV and aerial robotics systems. The session focused on practical concepts of embedded control, interfacing, and programming, helping participants build a foundation for developing intelligent aerial systems.',
+    poster: 'microcontroller-workshop.png',
+    tag: 'COMPLETED',
+    accent: true,
+    highlight: 'Resource Persons: P Sinchan Rao, Karthik K Bhat',
+  },
+  {
+    id: 'EVT-04',
+    name: 'CAD Workshop',
+    subtitle: 'Successfully Conducted',
+    date: '2026-08-17',
+    dateDisplay: '17 August 2026',
+    venue: 'The National Institute of Engineering, Mysuru',
+    description:
+      'Raptor Dynamics successfully conducted a hands-on CAD Workshop, introducing students to the fundamentals of computer-aided design and 3D modelling for UAV applications. The session focused on developing practical design skills and helping participants understand how CAD can be applied to the design and development of aerial systems.',
+    poster: 'cad-workshop.png',
+    tag: 'COMPLETED',
+    accent: true,
+    highlight: 'Resource Person: Thaman S N',
   },
   {
     id: 'EVT-02',
@@ -29,6 +57,20 @@ const events = [
     poster: 'recruitment-drive-poster.jpeg',
     tag: 'COMPLETED',
     accent: true,
+  },
+  {
+    id: 'EVT-03',
+    name: 'Inauguration of Center for Drone Technology and Research & Launch of Raptor Dynamics',
+    subtitle: 'Successfully Hosted',
+    date: '2026-04-23',
+    dateDisplay: '23 April 2026 | 4:00 PM',
+    venue: 'Center for Drone Technology and Research, Admin Block, NIE, Mysuru',
+    description:
+      'The National Institute of Engineering, Mysuru, successfully inaugurated the Center for Drone Technology and Research and officially launched Raptor Dynamics, a student-driven UAV and aerial robotics club. The event also marked the signing of a Memorandum of Understanding (MoU) with Aviocian Technologies Pvt. Ltd., strengthening industry collaboration in drone technology and research.',
+    poster: 'innaguration.jpeg',
+    tag: 'COMPLETED',
+    accent: true,
+    highlight: 'Signing of MoU with Aviocian Technologies Pvt. Ltd.',
   },
   {
     id: 'EVT-01',
@@ -45,8 +87,10 @@ const events = [
   },
 ]
 
-function EventCard({ event, isActive, onSelect, reducedMotion }) {
+function EventCard({ event, isActive, isHoveringAny, onSelect, reducedMotion, onMouseEnter, onMouseLeave }) {
   const [imgError, setImgError] = useState(false)
+  
+  const isDimmed = isHoveringAny && !isActive;
 
   return (
     <motion.div
@@ -57,20 +101,21 @@ function EventCard({ event, isActive, onSelect, reducedMotion }) {
         border: `1px solid ${event.accent ? 'rgba(232,255,0,0.18)' : 'rgba(255,255,255,0.09)'}`,
         backdropFilter: 'blur(20px) saturate(160%)',
         WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+        zIndex: isActive ? 10 : 1,
+      }}
+      animate={{
+        scale: isActive && !reducedMotion ? 1.05 : (isDimmed && !reducedMotion ? 0.98 : 1),
+        y: isActive && !reducedMotion ? -8 : 0,
+        opacity: isDimmed ? 0.5 : 1,
+        filter: isDimmed ? 'brightness(0.7) saturate(0.8)' : 'brightness(1) saturate(1)',
         boxShadow: isActive
           ? 'inset 0 1px 0 rgba(255,255,255,0.1), 0 20px 60px rgba(0,0,0,0.4), 0 0 80px rgba(232,255,0,0.12)'
           : 'inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 40px rgba(0,0,0,0.25)',
-        transform: isActive && !reducedMotion ? 'scale(1.05) translateY(-8px)' : undefined,
-        zIndex: isActive ? 10 : 1,
-        opacity: isActive ? 1 : 0.7,
-        filter: isActive ? undefined : 'brightness(0.85)',
-        transition: reducedMotion
-          ? 'none'
-          : 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease, z-index 0s',
       }}
-      whileHover={!reducedMotion ? { y: -8, scale: 1.02 } : {}}
-      transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+      transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 260, damping: 22 }}
       onClick={() => onSelect(event)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <button
         type="button"
@@ -86,10 +131,10 @@ function EventCard({ event, isActive, onSelect, reducedMotion }) {
             loading="lazy"
             decoding="async"
             onError={() => setImgError(true)}
-            style={{
-              filter: isActive ? 'brightness(1.05) saturate(1.1)' : 'brightness(0.9)',
-              transition: reducedMotion ? 'none' : 'filter 0.4s ease',
+            animate={{
+              filter: isActive ? 'brightness(1.05) saturate(1.1)' : 'brightness(0.9)'
             }}
+            transition={reducedMotion ? { duration: 0 } : { duration: 0.4 }}
           />
         ) : (
           <div
@@ -121,19 +166,22 @@ function EventCard({ event, isActive, onSelect, reducedMotion }) {
         )}
       </button>
 
-      <div className="p-4 pt-3 text-center" style={{ opacity: isActive ? 1 : 0.6 }}>
+      <motion.div 
+        className="p-4 pt-3 text-center" 
+        animate={{ opacity: isActive ? 1 : 0.7 }}
+        transition={{ duration: 0.3 }}
+      >
         <h3 className="font-display leading-tight tracking-tight" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', color: 'var(--color-text)' }}>
           {event.name.toUpperCase()}
         </h3>
-      </div>
+      </motion.div>
 
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `radial-gradient(ellipse 60% 40% at 20% 50%, ${event.accent ? 'rgba(232,255,0,0.05)' : 'rgba(255,255,255,0.02)'} 0%, transparent 70%)`,
         }}
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: isActive ? 0 : 1 }}
+        animate={{ opacity: isActive ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
     </motion.div>
@@ -282,6 +330,44 @@ export default function EventsSection() {
     }
   }, [isOverflow])
 
+  const requestRef = useRef()
+  const velocityRef = useRef(0)
+
+  const panScroll = useCallback(() => {
+    if (carouselRef.current && velocityRef.current !== 0) {
+      carouselRef.current.scrollLeft += velocityRef.current
+    }
+    requestRef.current = requestAnimationFrame(panScroll)
+  }, [])
+
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(panScroll)
+    return () => cancelAnimationFrame(requestRef.current)
+  }, [panScroll])
+
+  const handleMouseMove = useCallback((e) => {
+    if (!carouselRef.current || !isOverflow) return
+    const rect = carouselRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const width = rect.width
+    const ratio = x / width
+
+    const threshold = 0.25
+    const maxSpeed = 15
+
+    if (ratio < threshold) {
+      velocityRef.current = -((threshold - ratio) / threshold) * maxSpeed
+    } else if (ratio > 1 - threshold) {
+      velocityRef.current = ((ratio - (1 - threshold)) / threshold) * maxSpeed
+    } else {
+      velocityRef.current = 0
+    }
+  }, [isOverflow])
+
+  const handleMouseLeave = useCallback(() => {
+    velocityRef.current = 0
+  }, [])
+
   const activeIndex = isOverflow ? hoveredIndex : -1
 
   return (
@@ -329,10 +415,12 @@ export default function EventsSection() {
 
         <div
           ref={carouselRef}
-          className="relative"
+          className="relative hide-scrollbar"
           role="region"
           aria-label="Events carousel"
           onWheel={handleWheel}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
           style={{
             touchAction: 'pan-x',
             overflow: isOverflow ? 'auto' : 'visible',
@@ -350,10 +438,9 @@ export default function EventsSection() {
 
           <div
             ref={cardsContainerRef}
-            className="flex gap-6 pb-6"
+            className="flex pb-6 -space-x-4 md:-space-x-8 px-6 md:px-12"
             style={{
               paddingBottom: isOverflow ? '1.5rem' : 0,
-              scrollSnapType: isOverflow ? 'x mandatory' : 'none',
               WebkitOverflowScrolling: 'touch',
             }}
           >
@@ -361,7 +448,8 @@ export default function EventsSection() {
               <EventCard
                 key={event.id}
                 event={event}
-                isActive={isOverflow && index === hoveredIndex}
+                isActive={index === hoveredIndex}
+                isHoveringAny={hoveredIndex !== -1}
                 onSelect={setSelectedEvent}
                 reducedMotion={reducedMotion}
                 onMouseEnter={() => setHoveredIndex(index)}
@@ -391,12 +479,6 @@ export default function EventsSection() {
                 whileTap={{ scale: 0.8 }}
               />
             ))}
-          </div>
-        )}
-
-        {isOverflow && (
-          <div className="text-center mt-3 text-xs tracking-[0.15em] uppercase" style={{ color: 'rgba(245,245,245,0.35)' }}>
-            Scroll or drag horizontally • Hover card for details • Click for full info
           </div>
         )}
       </div>
