@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import ScrollReveal from './ScrollReveal'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 const galleryRow1 = [
   { id: 1, src: `${import.meta.env.BASE_URL}gallery/gallery-img-2.jpeg`, alt: 'Inauguration Day' },
@@ -24,6 +24,76 @@ const galleryRow2 = [
   { id: 7, src: `${import.meta.env.BASE_URL}gallery/gallery-img-7.jpeg`, alt: 'Drones' },
   { id: 8, src: `${import.meta.env.BASE_URL}gallery/gallery-img-8.jpeg`, alt: 'Drones' },
 ]
+
+function GalleryRow({ items, startIndex }) {
+  const carouselRef = useRef(null)
+  const requestRef = useRef()
+  const velocityRef = useRef(0)
+
+  const panScroll = useCallback(() => {
+    if (carouselRef.current && velocityRef.current !== 0) {
+      carouselRef.current.scrollLeft += velocityRef.current
+    }
+    requestRef.current = requestAnimationFrame(panScroll)
+  }, [])
+
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(panScroll)
+    return () => cancelAnimationFrame(requestRef.current)
+  }, [panScroll])
+
+  const handleMouseMove = useCallback((e) => {
+    if (!carouselRef.current) return
+    const rect = carouselRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const width = rect.width
+    const ratio = x / width
+
+    const threshold = 0.25
+    const maxSpeed = 15
+
+    if (ratio < threshold) {
+      velocityRef.current = -((threshold - ratio) / threshold) * maxSpeed
+    } else if (ratio > 1 - threshold) {
+      velocityRef.current = ((ratio - (1 - threshold)) / threshold) * maxSpeed
+    } else {
+      velocityRef.current = 0
+    }
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    velocityRef.current = 0
+  }, [])
+
+  const handleWheel = useCallback((e) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      e.preventDefault()
+      if (carouselRef.current) {
+        carouselRef.current.scrollBy({ left: e.deltaX, behavior: 'smooth' })
+      }
+    }
+  }, [])
+
+  return (
+    <div 
+      ref={carouselRef}
+      className="overflow-x-auto hide-scrollbar pb-4 -mx-6 px-6 md:mx-0 md:px-0"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onWheel={handleWheel}
+      style={{ touchAction: 'pan-x' }}
+    >
+      <div 
+        className="flex h-[350px] lg:h-[400px] gap-3 w-[250%] sm:w-[175%] md:w-[150%] lg:w-[125%] min-w-[900px]" 
+        onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}
+      >
+        {items.map((item, index) => (
+          <AccordionItem key={item.id} item={item} index={startIndex + index} />
+        ))}
+      </div>
+    </div>
+  )
+}
 
 function AccordionItem({ item, index }) {
   const [isHovered, setIsHovered] = useState(false)
@@ -124,28 +194,10 @@ export default function GallerySection() {
 
         <div className="mt-12 flex flex-col gap-6">
           {/* Row 1: Events and Programmes */}
-          <div className="overflow-x-auto hide-scrollbar pb-4 -mx-6 px-6 md:mx-0 md:px-0">
-            <div 
-              className="flex h-[350px] lg:h-[400px] gap-3 w-[250%] sm:w-[175%] md:w-[150%] lg:w-[125%] min-w-[900px]" 
-              onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}
-            >
-              {galleryRow1.map((item, index) => (
-                <AccordionItem key={item.id} item={item} index={index} />
-              ))}
-            </div>
-          </div>
+          <GalleryRow items={galleryRow1} startIndex={0} />
 
           {/* Row 2: Drones */}
-          <div className="overflow-x-auto hide-scrollbar pb-4 -mx-6 px-6 md:mx-0 md:px-0">
-            <div 
-              className="flex h-[350px] lg:h-[400px] gap-3 w-[250%] sm:w-[175%] md:w-[150%] lg:w-[125%] min-w-[900px]" 
-              onMouseLeave={(e) => e.currentTarget.dispatchEvent(new CustomEvent('clearHover'))}
-            >
-              {galleryRow2.map((item, index) => (
-                <AccordionItem key={item.id} item={item} index={galleryRow1.length + index} />
-              ))}
-            </div>
-          </div>
+          <GalleryRow items={galleryRow2} startIndex={galleryRow1.length} />
         </div>
 
       </div>

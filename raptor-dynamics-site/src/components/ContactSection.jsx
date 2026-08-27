@@ -39,13 +39,13 @@ const socials = [
 export default function ContactSection() {
   const [formData, setFormData] = useState({ name: '', email: '', interest: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [submitType, setSubmitType] = useState(null)
+  const [copied, setCopied] = useState(false)
   const [focused, setFocused] = useState(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // Route data exactly as chosen: via the native mailto client
-    // Replace this email string with your actual club contact email 
     const targetEmail = 'raptordynamicsnie@gmail.com'
     const subject = encodeURIComponent(`Raptor Dynamics Form: ${formData.name}`)
     const body = encodeURIComponent(
@@ -55,10 +55,16 @@ export default function ContactSection() {
       `Message:\n${formData.message}`
     )
 
-    // Trigger opening the default mail app with the pre-filled fields
-    window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`
+    // Detect if the user is likely on a mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768
 
-    // Instantly trigger the visual success animation
+    if (isMobile) {
+      window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`
+      setSubmitType('mobile')
+    } else {
+      setSubmitType('desktop')
+    }
+    
     setSubmitted(true)
   }
 
@@ -123,23 +129,83 @@ export default function ContactSection() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="flex flex-col items-center justify-center text-center p-16 clip-corner-lg"
+                className="flex flex-col items-center justify-center text-center p-8 md:p-16 clip-corner-lg"
                 style={{ border: '1px solid rgba(232,255,0,0.2)', background: 'rgba(232,255,0,0.04)', minHeight: '400px' }}
               >
-                <motion.div
-                  className="font-display text-6xl mb-4"
-                  style={{ color: 'var(--color-accent)' }}
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 0.6 }}
-                >
-                  ✓
-                </motion.div>
-                <h3 className="font-display text-4xl tracking-wide mb-3" style={{ color: 'var(--color-text)' }}>
-                  MESSAGE SENT
-                </h3>
-                <p className="text-sm" style={{ color: 'rgba(245,245,245,0.45)' }}>
-                  We'll get back to you soon. Welcome aboard, future Raptor!
-                </p>
+                {submitType === 'mobile' ? (
+                  <>
+                    <motion.div
+                      className="font-display text-6xl mb-4"
+                      style={{ color: 'var(--color-accent)' }}
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      ✓
+                    </motion.div>
+                    <h3 className="font-display text-4xl tracking-wide mb-3" style={{ color: 'var(--color-text)' }}>
+                      REDIRECTING...
+                    </h3>
+                    <p className="text-sm" style={{ color: 'rgba(245,245,245,0.45)' }}>
+                      Opening your email app to send the message. We'll get back to you soon!
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <motion.div
+                      className="font-display text-6xl mb-4"
+                      style={{ color: 'var(--color-accent)' }}
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      ✉
+                    </motion.div>
+                    <h3 className="font-display text-4xl tracking-wide mb-3" style={{ color: 'var(--color-text)' }}>
+                      SEND YOUR EMAIL
+                    </h3>
+                    <p className="text-sm mb-8" style={{ color: 'rgba(245,245,245,0.45)' }}>
+                      Please send your message to our email address below.
+                    </p>
+
+                    <div className="flex flex-col items-center gap-4 w-full">
+                      <div className="flex items-center gap-3 px-6 py-3 clip-corner" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <span className="text-sm font-medium tracking-wide" style={{ color: 'var(--color-text)' }}>
+                          raptordynamicsnie@gmail.com
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText('raptordynamicsnie@gmail.com')
+                            setCopied(true)
+                            setTimeout(() => setCopied(false), 2000)
+                          }}
+                          className="ml-2 px-3 py-1.5 text-[10px] uppercase tracking-wider font-bold transition-colors"
+                          style={{ background: copied ? 'rgba(255,255,255,0.2)' : 'var(--color-accent)', color: copied ? '#fff' : '#000' }}
+                        >
+                          {copied ? 'Copied!' : 'Copy'}
+                        </button>
+                      </div>
+
+                      <div className="flex flex-wrap justify-center gap-3 mt-2">
+                        <a 
+                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=raptordynamicsnie@gmail.com&su=${encodeURIComponent(`Raptor Dynamics Form: ${formData.name}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nArea of Interest: ${formData.interest}\n\nMessage:\n${formData.message}`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2.5 text-xs font-bold tracking-wider uppercase clip-corner transition-all"
+                          style={{ border: '1px solid rgba(232,255,0,0.3)', color: 'var(--color-accent)' }}
+                        >
+                          Open in Gmail
+                        </a>
+                        <a 
+                          href={`mailto:raptordynamicsnie@gmail.com?subject=${encodeURIComponent(`Raptor Dynamics Form: ${formData.name}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nArea of Interest: ${formData.interest}\n\nMessage:\n${formData.message}`)}`}
+                          className="px-5 py-2.5 text-xs font-bold tracking-wider uppercase clip-corner transition-all"
+                          style={{ border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(245,245,245,0.8)' }}
+                        >
+                          Default Mail App
+                        </a>
+                      </div>
+                    </div>
+                  </>
+                )}
               </motion.div>
             ) : (
               <motion.form key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onSubmit={handleSubmit} className="flex flex-col gap-4">
