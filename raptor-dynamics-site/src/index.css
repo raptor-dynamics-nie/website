@@ -203,4 +203,19 @@
     0%, 100% { opacity: 0.04; }
     50% { opacity: 0.08; }
   }
+
+  /* PRD: Video CSS specifications */
+  .about-video-container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .about-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
 }
+

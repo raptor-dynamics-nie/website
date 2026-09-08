@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
 import ScrollReveal, { StaggerContainer, StaggerItem } from './ScrollReveal'
 
 const pillars = [
@@ -7,6 +8,145 @@ const pillars = [
   { label: 'Real Projects',   value: 'Hands-On', sub: 'With Simulations'                },
   { label: 'Industry Links',  value: 'Bridge To', sub: 'Aerial Robotics Sector'         },
 ]
+
+/* ── Looping video box ─────────────────────────────────────────────────────── */
+function AboutVideo() {
+  const containerRef = useRef(null)
+  const videoRef = useRef(null)
+  const [videoReady, setVideoReady] = useState(false)
+  const [error, setError] = useState(false)
+
+  /* Safe autoplay trigger & reduced motion check */
+  useEffect(() => {
+    // Respect user's reduced-motion preference
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+    if (prefersReducedMotion) return
+
+    const v = videoRef.current
+    if (!v) return
+
+    const playPromise = v.play()
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        /* Silently ignore if autoplay blocked by browser policy */
+      })
+    }
+  }, [])
+
+  return (
+    <div
+      ref={containerRef}
+      className="about-video-container relative overflow-hidden clip-corner-lg"
+      style={{
+        aspectRatio: '1 / 1',
+        border: '1px solid rgba(255,255,255,0.07)',
+        background: '#0a0a0a',
+      }}
+    >
+      {/* subtle grid overlay – keeps the brand feel even while video plays */}
+      <div
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          backgroundImage: `linear-gradient(rgba(232,255,0,0.025) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(232,255,0,0.025) 1px, transparent 1px)`,
+          backgroundSize: '48px 48px',
+        }}
+      />
+
+      {/* accent corner glow */}
+      <div
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{ background: 'linear-gradient(135deg, rgba(232,255,0,0.06) 0%, transparent 55%)' }}
+      />
+
+      {/* ── Native HTML5 Video (Hardware accelerated, native 25 FPS, clean GOP) ── */}
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster={`${import.meta.env.BASE_URL}about-poster.jpg`}
+        onCanPlay={() => setVideoReady(true)}
+        onPlaying={() => setVideoReady(true)}
+        onError={() => { setVideoReady(true); setError(true) }}
+        className="about-video"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+          objectPosition: 'center',
+          display: error ? 'none' : 'block',
+        }}
+      >
+        <source
+          src={`${import.meta.env.BASE_URL}videos/about-480p.mp4`}
+          type="video/mp4"
+        />
+        <source
+          src={`${import.meta.env.BASE_URL}about-video.mp4`}
+          type="video/mp4"
+        />
+      </video>
+
+      {/* ── Loading indicator: Keeps poster visible underneath ── */}
+      {!videoReady && !error && (
+        <div
+          className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 pointer-events-none transition-opacity duration-300"
+          style={{ background: 'rgba(10,10,10,0.35)' }}
+        >
+          {/* spinning ring */}
+          <div style={{
+            width: 44, height: 44,
+            borderRadius: '50%',
+            border: '3px solid rgba(232,255,0,0.2)',
+            borderTopColor: 'var(--color-accent)',
+            animation: 'spin 0.9s linear infinite',
+          }} />
+          <span className="text-[11px] tracking-widest uppercase font-semibold" style={{ color: 'rgba(245,245,245,0.6)' }}>
+            Loading…
+          </span>
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+      )}
+
+      {/* ── Fallback if video fails: Keeps poster & branding visible ── */}
+      {error && (
+        <div
+          className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4"
+          style={{
+            backgroundImage: `url("${import.meta.env.BASE_URL}about-poster.jpg")`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
+          <div className="absolute inset-0 bg-black/75 flex flex-col items-center justify-center gap-4">
+            <motion.img
+              src={`${import.meta.env.BASE_URL}raptor-logo.png`}
+              alt="Raptor Dynamics"
+              className="w-48 md:w-64 object-contain"
+              style={{ filter: 'brightness(0) invert(1)', opacity: 0.18 }}
+              animate={{ scale: [1, 1.03, 1] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <div className="text-center">
+              <div className="font-display text-xl tracking-[0.3em]" style={{ color: 'rgba(245,245,245,0.3)' }}>
+                RAPTOR DYNAMICS
+              </div>
+              <div className="text-xs tracking-[0.4em] uppercase mt-1" style={{ color: 'rgba(245,245,245,0.18)' }}>
+                est. 2020 · NIE Mysuru
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function AboutSection() {
   return (
@@ -19,49 +159,9 @@ export default function AboutSection() {
       <div className="relative z-10">
         {/* About split */}
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
-          {/* Left: visual */}
-          <ScrollReveal variant="scaleUp" delay={0.05}>
-            <div
-              className="relative aspect-square max-w-lg clip-corner-lg overflow-hidden"
-              style={{ border: '1px solid rgba(255,255,255,0.07)' }}
-            >
-              {/* Grid art */}
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(232,255,0,0.04) 0%, transparent 60%)' }} />
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: `linear-gradient(rgba(232,255,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(232,255,0,0.03) 1px, transparent 1px)`,
-                  backgroundSize: '48px 48px',
-                }}
-              />
-
-              {/* Club logo centred */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                <motion.img
-                  src={`${import.meta.env.BASE_URL}raptor-logo.png`}
-                  alt="Raptor Dynamics"
-                  className="w-48 md:w-64 object-contain"
-                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.15 }}
-                  animate={{ scale: [1, 1.03, 1] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                />
-                <div className="text-center">
-                  <div className="font-display text-xl tracking-[0.3em]" style={{ color: 'rgba(245,245,245,0.25)' }}>
-                    RAPTOR DYNAMICS
-                  </div>
-                  <div className="text-xs tracking-[0.4em] uppercase mt-1" style={{ color: 'rgba(245,245,245,0.15)' }}>
-                    est. 2026 · NIE Mysuru
-                  </div>
-                </div>
-              </div>
-
-              {/* Corner labels */}
-              <div className="absolute top-5 left-5 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--color-accent)', animation: 'pulse-dot 2s infinite' }} />
-                <span className="text-[10px] tracking-widest uppercase" style={{ color: 'rgba(245,245,245,0.3)' }}>Systems Online</span>
-              </div>
-
-            </div>
+          {/* Left: video box */}
+          <ScrollReveal variant="scaleUpClean" delay={0.05}>
+            <AboutVideo />
           </ScrollReveal>
 
           {/* Right: text */}

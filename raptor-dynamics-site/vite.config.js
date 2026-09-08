@@ -9,6 +9,17 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    headers: {
+      'Accept-Ranges': 'bytes',
+    },
+  },
+  preview: {
+    headers: {
+      'Accept-Ranges': 'bytes',
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    },
+  },
   build: {
     // Increase chunk warning threshold (framer-motion is large by design)
     chunkSizeWarningLimit: 600,

@@ -30,6 +30,10 @@ const variants = {
     hidden:  { opacity: 0, scale: 0.92, filter: 'blur(4px)' },
     visible: { opacity: 1, scale: 1,    filter: 'blur(0px)' },
   },
+  scaleUpClean: {
+    hidden:  { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1 },
+  },
   clipReveal: {
     hidden:  { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
     visible: { clipPath: 'inset(0 0% 0 0)',   opacity: 1 },
